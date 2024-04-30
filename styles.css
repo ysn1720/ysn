@@ -545,4 +545,8 @@ strong {
     border-width: 1.5px;
     border-color: white;
     }
+
+    strong {
+      font-size:0.8rem;
+    }
     }
