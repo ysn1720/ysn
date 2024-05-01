@@ -68,7 +68,6 @@
         <div class="calendar-item">
             <h1 class="year">2031</h1>
         </div>
-
         <div class="calendar-item">
             <h1 class="year">2032</h1>
         </div>
@@ -138,10 +137,8 @@
             <p class="info jp-txt">   
                         展示会開催のお知らせ</p>
                         <p class="info eng-txt">
-                                
                             YSN 2024 Exhibition<br>5.1 Wed. - 5.12 Sun.                             11a.m. - 6p.m.  <br>
-                            Open everyday, Entrance free
-                </p>
+                            Open everyday, Entrance free</p>
             
                         <span class="info jp-txt"> 
                         * 5月1日 11時から12時まで、プロジェクトチームによるギャラリーツアーを開催します<br></span>
@@ -230,46 +227,45 @@ function getTimeZoneAbbreviation(timezone) {
 
 // ----------------------------------------------------------------logo rotation
 function swingOnScroll() {
-  const scrollTop = window.scrollY;
-  const swingElementA = document.querySelector('.logo_A');
-  const swingElementB = document.querySelector('.logo_B');
-  const swingElementC = document.querySelector('.logo_C');
-  const maxRotationA = 60; 
-  const maxRotationB = 320; 
-  const maxRotationC = 500; 
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  let rotationA = (scrollTop / scrollHeight) * maxRotationA; 
-  let rotationB = (scrollTop / scrollHeight) * maxRotationB; 
-  let rotationC = (scrollTop / scrollHeight) * maxRotationC; 
+    const scrollTop = window.scrollY;
+    const swingElementA = document.querySelector('.logo_A');
+    const swingElementB = document.querySelector('.logo_B');
+    const swingElementC = document.querySelector('.logo_C');
+    const maxRotationA = 60; 
+    const maxRotationB = 320; 
+    const maxRotationC = 500; 
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    let rotationA = (scrollTop / scrollHeight) * maxRotationA; 
+    let rotationB = (scrollTop / scrollHeight) * maxRotationB; 
+    let rotationC = (scrollTop / scrollHeight) * maxRotationC; 
 
-  rotationA *= 0.5; 
-  rotationB *= 0.9;
-  rotationC *= 0.8; 
+    rotationA *= 0.5; 
+    rotationB *= 0.9;
+    rotationC *= 0.8; 
 
-  swingElementA.style.transform = `rotate(${rotationA}deg)`;
-  swingElementB.style.transform = `rotate(${rotationB}deg)`;
-  swingElementC.style.transform = `rotate(${rotationC}deg)`;
+    swingElementA.style.transform = `rotate(${rotationA}deg)`;
+    swingElementB.style.transform = `rotate(${rotationB}deg)`;
+    swingElementC.style.transform = `rotate(${rotationC}deg)`;
 }
 
-
 function hideLogoOnClick(logoElement) {
-  logoElement.style.transition = 'opacity 0.1s'; 
-  logoElement.style.opacity = '0'; 
-  setTimeout(function() {
-    logoElement.style.display = 'none'; 
-  }, 1000); 
+    logoElement.style.transition = 'opacity 0.1s'; 
+    logoElement.style.opacity = '0'; 
+    setTimeout(function() {
+        logoElement.style.display = 'none'; 
+    }, 1000); 
 }
 
 document.querySelector('.logo_A').addEventListener('click', function() {
-  hideLogoOnClick(this);
+    hideLogoOnClick(this);
 });
 
 document.querySelector('.logo_B').addEventListener('click', function() {
-  hideLogoOnClick(this);
+    hideLogoOnClick(this);
 });
 
 document.querySelector('.logo_C').addEventListener('click', function() {
-  hideLogoOnClick(this);
+    hideLogoOnClick(this);
 });
 
 window.addEventListener('scroll', swingOnScroll);
