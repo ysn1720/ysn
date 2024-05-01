@@ -248,93 +248,83 @@ font-size: 1rem;
 
  /* logo --------------------------------------------------------- */
 
- 
-
 .logo-container {
-  width: 100%;
-  z-index:100;
+    width: 100%;
+    z-index: 100;
 }
 
 .logo-wrapper img.logo_A {
-  position: fixed;
-  right: 180px;
-  bottom: 400px;
-/* transform: translate(-50%, -50%); */
+    position: fixed;
+    right: 180px;
+    bottom: 400px;
 }
 
 .logo-wrapper img.logo_B {
-  position: fixed;
-  right: 90px;
-  bottom: 200px;
+    position: fixed;
+    right: 90px;
+    bottom: 200px;
 }
 
-.logo-wrapper img.logo_C{
-  position: fixed;
-  right: 270px;
-  bottom: 160px;
+.logo-wrapper img.logo_C {
+    position: fixed;
+    right: 270px;
+    bottom: 160px;
 }
 
 .logo_A {
-  width: 140px; 
-  transform-origin: center;
-  transition: transform 0.2s ease;
+    width: 140px; 
+    transform-origin: center;
+    transition: transform 0.2s ease;
 }
+
 .logo_B {
-  width: 75px; 
-  transform-origin: center;
-  transition: transform 0.2s ease;
+    width: 75px; 
+    transform-origin: center;
+    transition: transform 0.2s ease;
 }
 
 .logo_C {
-  width: 100px; 
-  transform-origin: center;
-  transition: transform 0.2s ease;
+    width: 100px; 
+    transform-origin: center;
+    transition: transform 0.2s ease;
 }
 
+@media only screen and (max-width: 720px) {
+    .logo-wrapper img.logo_A {
+        width: 110px; 
+    }
+    
+    .logo-wrapper img.logo_B {
+        width: 60px; 
+    }
+    
+    .logo-wrapper img.logo_C {
+        width: 80px; 
+    }
 
-  @media only screen and (max-width: 720px) {
-  .logo_A {
-    width: 110px; 
-    transform-origin: center;
-    transition: transform 0.2s ease;
-  }
-  .logo_B {
-    width: 60px; 
-    transform-origin: center;
-    transition: transform 0.2s ease;
-  }
-  
-  .logo_C {
-    width: 80px; 
-    transform-origin: center;
-    transition: transform 0.2s ease;
-  }
-
-  .logo-wrapper img.logo_A {
-    position: fixed;
-    right: 40%;
-    bottom: 40%;
-  /* transform: translate(-50%, -50%); */
-  }
-  
-  .logo-wrapper img.logo_B {
-    position: fixed;
-    right: 15%;
-    bottom: 20%;
-  }
-  
-  .logo-wrapper img.logo_C{
-    position: fixed;
-    right: 45%;
-    bottom: 10%;
-  }
+    .logo-wrapper img.logo_A {
+        position: fixed;
+        right: 40%;
+        bottom: 40%;
+    }
+    
+    .logo-wrapper img.logo_B {
+        position: fixed;
+        right: 15%;
+        bottom: 20%;
+    }
+    
+    .logo-wrapper img.logo_C {
+        position: fixed;
+        right: 45%;
+        bottom: 10%;
+    }
 }
-
 
 @keyframes swing {
-  0% { transform: rotate(-10deg); } 
-  100% { transform: rotate(10deg); }
-  }
+    0% { transform: rotate(-10deg); } 
+    100% { transform: rotate(10deg); }
+}
 
  /* marquee --------------------------------------------------------- */
 .marquee_container {
