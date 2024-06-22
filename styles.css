@@ -24,6 +24,7 @@ body, html {
   -webkit-text-size-adjust: 100%;
   font-weight: 300;
   color: var(--a3);
+  word-spacing: var(--ws-eng);
 }
 
 :root {
@@ -32,6 +33,7 @@ body, html {
   --letterspace08: 0.8px;
   --lh-jp: 1.3rem;
   --lh-eng: 1.2rem;
+  --ws-eng: -2px;
   --fontsize-main-jp: 15px;
   --a1: white;
   --a2: #fff9bf;
@@ -42,6 +44,21 @@ body, html {
   --a7: #fffdef;
 }
 
+.pad-x-a{
+  padding-left:1rem;
+  padding-right: 1rem;
+}
+
+.pad-y-a{
+  padding-top:1rem;
+  padding-bottom: 1rem;
+}
+
+.pad-bot-a{
+  padding-bottom: 0.5rem;
+}
+
+
 .flex {
   height: 100%;
   width: 100vw;
@@ -49,21 +66,18 @@ body, html {
   /* text-align: center; */
 }
 
-.header { 
-  width: 100vw;
-  z-index: 100;
-  background-color:var(--a2);
+.nav-container { 
+  margin: 0;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  width: 100vw;
+  z-index: 100;
+  background-color:var(--a2);
   border-bottom: 1px solid var(--a3);
 }
 
 .title-jp {
-  display: inline-block;
-  margin-left: 19px;
-  margin-bottom: 4px;
-  padding-top: 10px;
   font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", -apple-system, BlinkMacSystemFont, Hiragino Sans, Hiragino Kaku Gothic ProN, meiryo,sans-serif;
   font-weight: 300;
   font-size: 1.2rem;
@@ -71,54 +85,40 @@ body, html {
 }
 
 .title-eng {
-  display: inline-block;
-  margin-left: 20px;
-  margin-bottom: 10px;
   text-wrap: balance;
   letter-spacing: var(--letterspace01);
   font-size: 1.3rem;
-  line-height: 1.3rem;
+  line-height: 1.4rem;
 }
 
 #refreshed {
   position: fixed;
-  right: 5px;
-  top: 5px;
+  right: 1rem;
+  top: 1rem;
   font-size: 0.68rem;
 }
 
+
 @media only screen and (max-width: 420px) {
   .title-jp {
-    padding-top: 22px;
     font-size: 1.1rem;
+    padding-top: 14px;
   }
 
   .title-eng {
     font-size: 1.1rem;
-    margin-bottom: 10px;
     line-height: 1.3rem;
   }
 
   #refreshed {
     position: fixed;
-    right: 5px;
-    top: 5px;
+    right: 0.7rem;
+    top: 0.7rem;
     font-size: 0.6rem;
   }
 }
 
-
-.title-container {
-  display: inline-block;
-  margin: 0 auto;
-}
-
-#clock {
-  margin-right: 3px;
-}
-
- /* calendar--------------------------------------------------------- */
-
+ /* calendar */
 .calendar-container {
   display: flex;
   flex-flow: row;
@@ -127,7 +127,6 @@ body, html {
 }
 
 .calendar-item {
-  display: flex;
   position: relative;
   width: 25vw;
   height: 25vw;
@@ -142,29 +141,32 @@ body, html {
 }
 
 
-        @media only screen and (max-width: 1440px) {
-        .calendar-item{
-          min-width: 33.33vw;
-          min-height: 33.33vw;
-        }
-        }
-        @media only screen and (max-width: 1080px) {
-        .calendar-item {
-          width: 50vw;
-          height: 50vw;
-        }
-        }
+    @media only screen and (max-width: 1440px) {
+    .calendar-item{
+      min-width: 33.33vw;
+      min-height: 33.33vw;
+    }
+    }
+    @media only screen and (max-width: 1080px) {
+    .calendar-item {
+      width: 50vw;
+      height: 50vw;
+    }
+    }
+    @media only screen and (max-width: 720px) {
+    .calendar-item  {
+      width: 100vw;
+      height: 60vw;
+      border-right: 0px solid var(--a3);
+    }
+    }
 
-        @media only screen and (max-width: 720px) {
-        .calendar-item  {
-          width: 100vw;
-          height: 60vw;
-          border-right: 0px solid var(--a3);
-        }
-        }
-
-
-/* calendar contents--------------------------------------------------------- */
+/* calendar contents */
+.calendar-item, a{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
 
 .calendar-item:hover{
   background-color: var(--a7);
@@ -172,31 +174,14 @@ body, html {
   transition: 0.2s ease;
 }
 
-  .year {
-  margin: 0px;
-  position: absolute;
-  top:15px;
-  left: 15px;
+  h1 {
   font-family: Hershey-Futural--15,sans-serif;
-  font-weight: 300;
   font-size:72px;
   letter-spacing: -2px;
 }
 
-.text-container {
-  position: relative;
-  width:90%;
-  
-}
-
-.yearly-container {
-width: 100vw;
-}
-
-.txtbox{
-  position: absolute;
-  top: 105px;
-  left: 20px;
+h1, h2, h3 {
+  font-weight: inherit;
 }
 
 .jp-txt {
@@ -212,19 +197,7 @@ line-height: var(--lh-eng);
 font-size: 1rem;
 }
 
-@media only screen and (max-width: 420px) {
-  
-
-.eng-txt {
-  font-size: 1rem;
-  }
-}
-
-
-
-/* calendar contents year --------------------------------------------------------- */
-
-
+/* calendar contents */
 .calendar-container-year {
   display: flex;
   flex-flow: row;
@@ -233,7 +206,6 @@ font-size: 1rem;
 }
 
 .calendar-item-year {
-
   display: flex;
   position: relative;
   width: 100vw;
@@ -246,135 +218,31 @@ font-size: 1rem;
 
 
 
- /* logo --------------------------------------------------------- */
 
-.logo-container {
-    width: 100%;
-    z-index: 100;
-}
 
-.logo-wrapper img.logo_A {
-    position: fixed;
-    right: 180px;
-    bottom: 400px;
-}
-
-.logo-wrapper img.logo_B {
-    position: fixed;
-    right: 90px;
-    bottom: 200px;
-}
-
-.logo-wrapper img.logo_C {
-    position: fixed;
-    right: 270px;
-    bottom: 160px;
-}
-
-.logo_A {
-    width: 140px; 
-    transform-origin: center;
-    transition: transform 0.2s ease;
-}
-
-.logo_B {
-    width: 75px; 
-    transform-origin: center;
-    transition: transform 0.2s ease;
-}
-
-.logo_C {
-    width: 100px; 
-    transform-origin: center;
-    transition: transform 0.2s ease;
-}
-
-@media only screen and (max-width: 720px) {
-    .logo-wrapper img.logo_A {
-        width: 110px; 
-    }
-    
-    .logo-wrapper img.logo_B {
-        width: 60px; 
-    }
-    
-    .logo-wrapper img.logo_C {
-        width: 80px; 
-    }
-
-    .logo-wrapper img.logo_A {
-        position: fixed;
-        right: 40%;
-        bottom: 40%;
-    }
-    
-    .logo-wrapper img.logo_B {
-        position: fixed;
-        right: 15%;
-        bottom: 20%;
-    }
-    
-    .logo-wrapper img.logo_C {
-        position: fixed;
-        right: 45%;
-        bottom: 10%;
-    }
-}
-
-@keyframes swing {
-    0% { transform: rotate(-10deg); } 
-    100% { transform: rotate(10deg); }
-}
-
- /* marquee --------------------------------------------------------- */
-.marquee_container {
-  display: inline-block;
-  position: fixed;
-  justify-content: end;
-  bottom: 10px;
-}
-
- 
-  
-.marquee {
-  /* width: 900px; */
-  height: 20px;
-  overflow-x: hidden;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  letter-spacing: var(--letterspace01);
-}
-
-.track {
-  /* background-color: silver; */
-  position: absolute;
-  white-space: nowrap;
-  will-change: transform;
-  animation: marquee 42s linear infinite;
-}
-
-strong {
+/* calendar contents each page*/
+.calendar-item-open {
+  position: relative;
+  width: 50vw;
+  height: 100vw;
+  flex-wrap: wrap;
   font-family: var(--HF15),Arial,sans-serif;
-  font-size:1rem;
+  background-color:var(--a2);
+  border-bottom: 1px solid var(--a3);
+  border-right: 1px solid var(--a3);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow:scroll;
 }
 
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+
+
+ /* footer */
+
+ #clock {
+  margin-right: 3px;
 }
-
-
- /* footer  --------------------------------------------------------- */
-
-
- .ysn_logo{
-  position: fixed;
-  left: 18px;
-  bottom:48px;
-  width: 50px;
-  }
-
  
  footer {
   font-size: 0.85rem;
@@ -400,12 +268,6 @@ strong {
 
 @media only screen and (max-width: 720px) {
 
-      .ysn_logo{
-      position: fixed;
-      left: 15px;
-      bottom:35px;
-      width: 50px;
-      }
       .footer_container  {
         margin-top: 105px;
       flex-direction: column;
@@ -417,12 +279,137 @@ strong {
       .footer_clock, .result, .footer_update {
         display: flex;      
       }
-  
   } 
 
+  /* ysn logo */
+  .ysn_logo{
+    position: fixed;
+    left: 15px;
+    bottom:35px;
+    width: 50px;
+   }
 
+ /* marquee */
+.marquee_container {
+  display: inline-block;
+  position: fixed;
+  justify-content: end;
+  bottom: 10px;
+}
 
- /* alert --------------------------------------------------------- */
+.marquee {
+  /* width: 900px; */
+  height: 20px;
+  overflow-x: hidden;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  letter-spacing: var(--letterspace01);
+}
+
+.track {
+  /* background-color: silver; */
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 42s linear infinite;
+}
+
+strong {
+  font-family: var(--HF15),Arial,sans-serif;
+  font-size:1rem;
+}
+
+@media only screen and (max-width: 420px) {
+  strong {
+    font-size:0.8rem;
+  }
+}
+  
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+} 
+
+ /* logo yukkuri shikkari nokosu*/
+ .logo-container {
+  width: 100%;
+  z-index: 100;
+}
+
+.logo-wrapper img.logo_A {
+  position: fixed;
+  right: 180px;
+  bottom: 400px;
+}
+
+.logo-wrapper img.logo_B {
+  position: fixed;
+  right: 90px;
+  bottom: 200px;
+}
+
+.logo-wrapper img.logo_C {
+  position: fixed;
+  right: 270px;
+  bottom: 160px;
+}
+
+.logo_A {
+  width: 140px; 
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.logo_B {
+  width: 75px; 
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.logo_C {
+  width: 100px; 
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+@media only screen and (max-width: 720px) {
+  .logo-wrapper img.logo_A {
+      width: 110px; 
+  }
+  
+  .logo-wrapper img.logo_B {
+      width: 60px; 
+  }
+  
+  .logo-wrapper img.logo_C {
+      width: 80px; 
+  }
+
+  .logo-wrapper img.logo_A {
+      position: fixed;
+      right: 35%;
+      bottom: 37%;
+  }
+  
+  .logo-wrapper img.logo_B {
+      position: fixed;
+      right: 15%;
+      bottom: 20%;
+  }
+  
+  .logo-wrapper img.logo_C {
+      position: fixed;
+      right: 40%;
+      bottom: 15%;
+  }
+}
+
+@keyframes swing {
+  0% { transform: rotate(-10deg); } 
+  100% { transform: rotate(10deg); }
+}
+
+ /* alert 
 
  .modal {
   display: none;
@@ -434,7 +421,7 @@ strong {
   background-color: var(--a5);
   border-radius: 8px;
   padding: 35px;
-  width: 445px;
+  width: 490px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   color: var(--a1);
   margin: 0;
@@ -456,8 +443,6 @@ strong {
   margin-bottom: 20px;
 }
 
-
-
 .modal .eng-text {
   font-size: 1rem;
 }
@@ -478,8 +463,6 @@ strong {
   font-size: 22px;
 }
 
-
-
 @media only screen and (max-width: 720px) {
   .modal {
     position: fixed;
@@ -488,7 +471,6 @@ strong {
     z-index: 1000;
     padding: 30px 30px;
     width: 90vw;
-
   }
   }
 
@@ -510,16 +492,12 @@ strong {
 
     .modal .jp-txt {
     font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", -apple-system, BlinkMacSystemFont, Hiragino Sans, Hiragino Kaku Gothic ProN, meiryo, sans-serif;
-
-
     }
 
     .modal .eng-txt {
     letter-spacing: var(--letterspace01);
     font-size: 1rem;
- 
     }
-
 
     .info {
     margin-bottom: 15px;
@@ -534,9 +512,6 @@ strong {
     border-bottom: solid;
     border-width: 1.5px;
     border-color: white;
-    }
+    } 
+    */
 
-    strong {
-      font-size:0.8rem;
-    }
-    }
