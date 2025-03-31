@@ -1,0 +1,680 @@
+/* main contents 2024 */
+
+.contents {
+display: flex;
+height: 90vh;
+overflow: hidden; /* no scroll parent*/
+flex-grow: 1;  
+flex-wrap: nowrap;
+}
+
+body.sub .leftside {
+overflow-y: auto;
+border-right: 1px solid var(--yellow);
+}
+
+body.sub.mode_A .leftside {
+overflow-y: auto;
+border-right: 1px solid var(--gray);
+}
+
+@media (max-width: 720px) {
+.contents {
+height: 100%; 
+flex-wrap: wrap;
+overflow:scroll; 
+}
+}
+
+
+/* leftside */
+
+.leftside {
+flex: 1;
+display: relative;
+width: 50vw;
+background: linear-gradient(to top, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+}
+
+
+@media only screen and (max-width: 720px){
+.leftside {
+width: 90vw;
+height: 100%;
+}
+}
+
+.highlight {
+text-decoration: underline;
+text-underline-position: under; 
+text-decoration-style: dotted;
+}
+
+
+
+/* details */
+
+details { 
+display: block; 
+margin: 0;
+padding: 0;
+border: none;
+outline: none !important;
+}
+
+summary {
+cursor: pointer; 
+position: relative; 
+padding-right: 20px; 
+display: block; /* default is inline */
+margin: 0 0 5px 0;
+padding: 0;
+cursor: pointer;
+}
+
+details summary {
+list-style: none; 
+}
+
+summary { outline: none; }
+
+details summary::-webkit-details-marker {
+display: none; /* for safari*/
+}
+
+details {
+-webkit-tap-highlight-color: transparent; 
+}
+
+.answer {
+overflow: hidden;
+}
+
+/* no effect by clicking */
+details:focus, details:active {
+outline: none !important; 
+-webkit-tap-highlight-color: transparent; 
+}
+
+/* plus icons */
+summary {
+position: relative;
+}
+
+body.sub summary::after {
+content: "";
+background-image: url("bau/img/plus_y.svg");
+background-size: contain;
+background-repeat: no-repeat;
+width: 13px;
+height: 13px;
+position: absolute;
+right: 0;
+top: 7px;
+}
+
+body.sub.mode_A summary::after {
+background-image: url("bau/img/plus_g.svg");
+}
+
+body.sub.mode_A summary::after {
+background-image: url("bau/img/plus_g.svg");
+}
+
+
+body.sub details[open] summary::after {
+background-image: url("bau/img/minus_y.svg");
+top: 13px;
+}
+body.sub.mode_A details[open] summary::after {
+background-image: url("bau/img/minus_g.svg");
+}
+
+
+
+
+details details summary::after {
+content: none !important; /* コンテンツを完全に削除 */
+display: none !important; /* 完全に非表示にする */
+position: static !important; /* 位置指定をリセット */
+}
+
+
+
+
+.section-container {
+margin-bottom: 25px;
+}
+
+.section-title {
+font-family: Hershey-Futural--15, sans-serif;
+font-size: 2rem;
+}
+
+
+@media only screen and (max-width: 720px){
+.section-title {
+font-size: 1.5rem;
+}
+}
+
+.section-title::after {
+content:"";
+display:block;
+border-bottom: 1px dotted var(--yellow);
+margin-bottom: 10px;
+}
+
+
+body.mode_A .section-title::after {
+border-bottom: 1px dotted var(--gray);
+}
+
+
+details .section-txtbox p {
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2; /* 1行目のみ表示 */
+overflow: hidden; /* 残りは非表示 */
+}
+
+details[open] .section-txtbox p {
+-webkit-line-clamp: unset; /* 開くとすべてのテキストが表示される */
+overflow: visible; /* 見えるようにする */
+}
+
+
+/* item:sub */
+
+body.sub .linkto {
+border-radius: 6px;
+width: fit-content;
+padding: 3px 7px 0px 7px;
+background-color: var(--white);
+color: var(--gray);
+opacity: 0.6;
+}
+
+body.sub.mode_A .linkto {
+background-color: var(--white);
+}
+
+.linkto:hover {
+background-color: var(--white);
+color: var(--yellow);
+}
+
+
+.item-sub {
+margin-top: 10px;
+border-top: 1px dotted var(--yellow);
+padding-top: 8px;
+width: 95%;
+}
+
+.item-sub.mode_A {
+border-top: 1px dotted var(--gray);
+}
+
+.item-sub-txt
+{
+width: 95%;
+}
+
+
+@media only screen and (max-width: 720px){
+.item-sub, .item-sub-txt {
+width: 100%;
+}
+}
+
+
+
+
+.table01,
+.table02 {
+margin-top:10px;
+width: 95%;
+border-collapse: collapse;
+table-layout: fixed;
+}
+
+
+@media only screen and (max-width: 720px){
+.table01,
+.table02  {
+width: 100%;
+}
+}
+
+table th,
+table td {
+border: 1px dotted var(--yellow);
+text-align: center;
+padding: 10px;
+font-size: 0.8rem;
+}
+
+body.mode_A table th,
+body.mode_A table td  {
+border: 1px dotted var(--gray);
+}
+
+.table01 thead th:nth-child(1) {
+box-sizing: border-box;
+}
+
+
+
+
+
+
+
+/* --- main contents rightside--- */
+
+.rightside {
+display: flex;
+flex: 1; /* 右側は1つの単位 */
+height: 100%;
+position: relative; /* 疑似要素の基準位置 */
+overflow-x: scroll;
+}
+
+.gallery-container {
+flex: 1;
+display: flex;
+overflow-x: scroll;
+overflow-y: auto;
+white-space: nowrap;
+max-width: 100%;
+position: relative;
+scroll-behavior: smooth;
+}
+
+
+/* 画像 */
+.gallery-item {
+cursor: pointer;
+position: relative; /* Ensure we can animate the item independently */
+animation: scroll-hint 4s ease-out forwards;
+display: inline-block; /* Ensures the item stays inline and part of the scroll */
+
+}
+
+@keyframes scroll-hint {
+0% {
+transform: translateX(0px);
+}
+50% {
+transform: translateX(-200px);
+}
+100% {
+transform: translateX(0px);
+}
+}
+
+
+
+/* Optional: Make sure that the images have an appropriate width */
+.gallery-item img {
+width: 100%;
+height: auto;
+}
+
+
+/* 疑似要素で左右の三角形を追加 */
+.rightside::before,
+.rightside::after {
+content: "";
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+width: 100px;
+height: 100px;
+z-index: 10;
+cursor: pointer;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+}
+
+
+/* arrows on the gallery */
+.rightside::before {
+left: 10px;
+background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iMTYxIiB2aWV3Qm94PSIwIDAgNjQgMTYxIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNNjMgMTYwQzU5LjQ3MTUgMTI4LjI5OSAxOC4xMzgyIDgyLjUwOTUgMS4wMDAwMSA4MSIgc3Ryb2tlPSIjRkZGOUJGIiBzdHJva2Utd2lkdGg9IjIiLz4KPHBhdGggZD0iTTYzIDFDNTkuNDcxNSAzMy4xMDE5IDE4LjEzODIgNzkuNDcxMyAwLjk5OTk5MyA4MSIgc3Ryb2tlPSIjRkZGOUJGIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+Cg==);
+
+
+}
+
+.rightside::after {
+right: 10px;
+background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iMTYxIiB2aWV3Qm94PSIwIDAgNjQgMTYxIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMSAxQzQuNTI4NDYgMzIuNzAwNiA0NS44NjE4IDc4LjQ5MDQgNjMgODAiIHN0cm9rZT0iI0ZGRjlCRiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xIDE2MEM0LjUyODQ2IDEyNy44OTggNDUuODYxOCA4MS41Mjg3IDYzIDgwIiBzdHJva2U9IiNGRkY5QkYiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4K);
+
+}
+
+
+
+.gallery-container img {
+max-height: 100%; 
+cursor: pointer; /* クリック可能であることを示す */
+transition: transform 0.2s ease; /* ホバー時の拡大アニメーション */
+}
+
+@media only screen and (max-width: 720px){
+.rightside {
+display: flex;
+flex: 0.3; /* 右側は1つの単位 */
+border-right: 0px;
+overflow: auto;
+}
+
+.gallery-container {
+flex-direction: column;
+padding:5px;
+gap: 3px;
+}
+
+.gallery-item {
+width:100%;
+object-fit: cover;
+aspect-ratio: 1 / 1; /* 正方形を維持 */
+animation: none !important;
+cursor: pointer;
+animation: scroll-hint 2s ease-out forwards; 
+position: relative;
+}
+
+
+.gallery-container img {
+height: 110px;
+position: relative;
+}
+
+
+
+
+.rightside::before,
+.rightside::after {
+display:none;
+}
+
+
+
+}
+
+
+
+
+
+
+
+/* --- gallery modal --- */
+
+/* --- gallery modal --- */
+.modal {
+display: none; /* 親要素でflexboxを使用 */
+justify-content: center; /* 水平方向に中央配置 */
+align-items: center; /* 垂直方向に中央配置 */
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: var(--gray);
+z-index: 150;
+}
+
+
+body.mode_A {
+background-color:var(--yellow) !important;
+
+
+}
+.modal.open {
+display: flex;
+}
+
+/* モーダル内のコンテンツを中央に配置 */
+.modal figure {
+display: flex;
+flex-direction: column; /* 縦方向に並べる */
+align-items: center; /* 水平方向に中央配置 */
+justify-content: center; /* 縦方向に中央配置 */
+text-align: center;
+height: 100%; /* 高さを100%にして親要素に合わせる */
+}
+
+/* 画像のスタイリング */
+.modal img {
+max-width: 100%;
+max-height: 70vh;
+object-fit: contain;
+box-shadow: none;
+}
+
+
+/* キャプションのスタイリング */
+figcaption {
+position: absolute;
+bottom: 40px;
+font-size: 1rem;
+color: #333;
+}
+
+
+@media only screen and (max-width: 720px){
+.modal-content {
+max-height: 65vh; 
+}
+}
+
+
+
+
+
+/* .close-button {
+position: absolute;
+top: 150px; 
+right: 150px; 
+font-size: 100px; 
+font-weight: bold; 
+color: var(--grayA); 
+cursor: pointer; 
+z-index: 160; 
+transition: color 0.3s;
+} */
+
+/* btn position */
+
+
+body.sub #close-btn{
+background-image: url("bau/img/ysn_close_y.svg");
+min-height: 60px;
+width: 45px;
+margin-right: 15px;
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top: 15px; /* モーダル上からの距離 */
+right: 30px; /* モーダル右端からの距離 */
+transform: translate(50%, 0%);
+cursor: pointer; /* クリックできることを示す */
+z-index: 160; /* 最前面に配置 */
+transition: color 0.3s;
+}
+
+body.sub.mode_A #close-btn{
+background-image: url("bau/img/ysn_close_g.svg");
+min-height: 60px;
+width: 45px;
+margin-right: 15px;
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top: 15px; /* モーダル上からの距離 */
+right: 50px; /* モーダル右端からの距離 */
+transform: translate(50%, 0%);
+cursor: pointer; /* クリックできることを示す */
+z-index: 160; /* 最前面に配置 */
+transition: color 0.3s;
+}
+
+
+figure {
+margin: 0; /* デフォルトの余白をリセット */
+text-align: center; /* キャプションを中央揃え */
+
+}
+
+body.sub #modal-caption {
+margin: 10px 20px; /* 画像との間隔 */
+font-size: 0.8rem; /* キャプションの文字サイズ */
+color: var(--yellow);
+}
+
+body.sub.mode_A #modal-caption {
+color: var(--gray);
+}
+
+
+
+/* arrows on the modal */
+/* #prev-btn, #next-btn {
+position: absolute;
+bottom: 25px;
+transform: translateY(0%);
+width: 60px;
+height: 60px;
+z-index: 10;
+cursor: pointer;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+} */
+
+
+/* #prev-btn {
+left:40%;
+background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 20 20" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M 15,2 L 5,10 L 15,18" stroke="%23fff9bf" stroke-width="0.3" fill="none" /></svg>');
+}
+
+#next-btn {
+right: 40%;
+background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 20 20" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M 5,2 L 15,10 L 5,18" stroke="%23fff9bf" stroke-width="0.3" fill="none" /></svg>');
+} */
+
+/* @media only screen and (max-width: 800px){
+#prev-btn {
+left:30%;
+}
+#next-btn {
+right:30%;
+}
+} */
+
+
+.thumbs-container{
+display:flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: flex-start;
+align-items: flex-end;
+gap: 6px;
+
+}
+
+.picsinthumbs,
+.picsinthumbs_3,
+.picsinthumbs_4,
+.picsinthumbs_5 {
+height: 100px;
+width:100px;
+border-radius: 10px;
+object-fit: cover;
+cursor: pointer;
+opacity: 0.6;
+}
+
+@media only screen and (max-width: 720px){
+
+.picsinthumbs,
+.picsinthumbs_3,
+.picsinthumbs_4,
+.picsinthumbs_5 {
+opacity: 1;
+}
+}
+
+
+.thumb img:hover {
+opacity: 1;
+}
+
+.thumb {
+position: relative;
+display: inline-block;
+}
+.footnote, .footnote_img {
+font-size:0.5rem;
+}
+
+
+.footnote_img {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
+
+
+@media only screen and (max-width: 720px){
+.picsinthumbs {
+height: 70px;
+width: 70px;
+border-radius: 8px;
+}
+}
+
+
+@media only screen and (max-width: 720px){
+.picsinthumbs {
+height: 70px;
+width: 70px;
+border-radius: 8px;
+}
+
+.ysn-footer::after {
+content: ""; /* 空にする */
+position: absolute;
+display: none;
+width: 30px;
+height: 30px;
+right: 10px;
+bottom:40px;
+background-image: url("bau/img/logo/ysn_g_4pt.svg");
+background-size: contain;
+background-repeat: no-repeat;
+}
+}
+
+
+
+
+
+body.sub #btt-icon {
+background-image: url("bau/img/ysn_btt_y.svg");
+height: 40px;
+width: 180px;
+background-size: contain;
+background-repeat: no-repeat;
+}
+
+body.sub.mode_A #btt-icon {
+background-image: url("bau/img/ysn_btt_g.svg");
+}
+
+@media only screen and (max-width: 720px){
+
+
+}
