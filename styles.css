@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
+
+
 html {
   font-size: 14.5px;
 }
@@ -20,6 +22,7 @@ body {
   position:relative;
   margin: 0;
   padding: 0;
+  
 }
 
 
@@ -73,8 +76,7 @@ color: var(--gray) !important;
 
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--yellow); /* スクロールバーの色 */
-
+  background-color: var(--yellow); 
 }
 
 
@@ -306,22 +308,21 @@ font-size: 13.5px;
 .calendar-container {
   display: flex;
   flex-flow: row;
-  width: 100vw;
+  width: 100%;
+  min-width: 100vw;
   flex-wrap: wrap;
   overflow: auto;
 }
 
 .calendar-item {
-  
-  width: 25vw;
-  height: 25vw;
-  flex-wrap: wrap;
-  font-family: var(--HF15),Arial,sans-serif;
+  -webkit-box-sizing: border-box;
   border-bottom: 1px solid var(--yellow);
   border-right: 1px solid var(--yellow);
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  overflow-y: auto; /* 縦スクロールを有効にする */
+  flex: 0 0 25%; /* 4列表示 */
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .calendar-item, a{
@@ -344,36 +345,34 @@ font-size: 13.5px;
 .calendar-container-year {
   display: flex;
   flex-flow: row;
-  width: 100vw;
+  width: 100%;
   flex-wrap: wrap;
 }
 
 .calendar-item-year {
   display: flex;
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vw;
   flex-wrap: wrap;
   border-bottom: 1px solid var(--yellow);
-  border-right: 1px solid var(--yellow);
+  border-right: 1px solid var(--yellow); 
 }
 
 @media only screen and (max-width: 1440px) {
-  .calendar-item{
-    min-width: 33.33vw;
-    min-height: 33.33vw;
+  .calendar-item {
+    flex: 0 0 33.33%; /* 3列表示 */
   }
   }
   @media only screen and (max-width: 1080px) {
-  .calendar-item {
-    width: 50vw;
-    height: 50vw;
-  }
+    .calendar-item {
+      flex: 0 0 50%; /* 2列表示 */
+    }
   }
   @media only screen and (max-width: 720px) {
-  .calendar-item  {
-    width: 100vw;
-    height: 100vw;
+    .calendar-item {
+      flex: 0 0 100%; /* 1列表示 */
+      border-right: none;
     border-right: 0px solid var(--yellow);
   }
   }
@@ -429,7 +428,7 @@ body.sub .footer_container{
   .footer_container {
     flex-direction: column;
     justify-content: flex-start;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     gap: 6px;
     padding: 10px 0px 5px 0px;
     padding-left: 20px;
