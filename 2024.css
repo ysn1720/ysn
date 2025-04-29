@@ -266,7 +266,7 @@ width: 100%;
 
 table th,
 table td {
-font-size: 0.6rem;
+font-size: 0.7rem;
 }
 
 
@@ -280,7 +280,7 @@ font-size: 0.6rem;
 .rightside {
 display: flex;
 flex: 1; 
-height: 100%;
+height: 100vh;
 position: relative; 
 overflow-x: scroll;
 }
@@ -294,16 +294,39 @@ white-space: nowrap;
 max-width: 100%;
 position: relative;
 scroll-behavior: smooth;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;     /* Firefox */
+overflow-x: scroll;
+overflow-y: hidden;
 }
+
+.gallery-container::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
+
+
+* {
+  box-sizing: border-box;
+}
+.gallery-container, .rightside {
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+}
+
+
 
 
 /* pictures */
 .gallery-item {
+  height: 100%;
 cursor: pointer;
 position: relative; /* Ensure we can animate the item independently */
 animation: scroll-hint 4s ease-out forwards;
 display: inline-block; /* Ensures the item stays inline and part of the scroll */
-
+line-height: 0;
+padding: 0;
+margin: 0;
 }
 
 @keyframes scroll-hint {
@@ -320,12 +343,16 @@ transform: translateX(0px);
 
 
 
-/* Optional: Make sure that the images have an appropriate width */
 .gallery-item img {
-width: 100%;
-height: auto;
+  display: block;        /* インライン画像の余白を除去 */
+  width: 100%;           /* 横幅いっぱいに */
+  height: auto;          /* 高さは自動 */
+  margin: 0;
+  padding: 0;
+  line-height: 0;        /* 行の高さを0に */
+  border: none;          /* 万が一のボーダー対策 */
+  vertical-align: bottom; /* baselineの余白回避 */
 }
-
 
 .rightside::before,
 .rightside::after {
@@ -363,6 +390,7 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0i
 max-height: 100%; 
 cursor: pointer; 
 transition: transform 0.2s ease; /* animation with hover */
+ display: block;
 }
 
 @media only screen and (max-width: 720px){
@@ -380,6 +408,7 @@ gap: 3px;
 }
 
 .gallery-item {
+  
 width:100%;
 object-fit: cover;
 aspect-ratio: 1 / 1; /* 1 x 1 */
