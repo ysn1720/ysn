@@ -387,3 +387,33 @@ function closeModalContent() {
   modal.classList.remove("open");
 }
 });
+
+
+// // alert--------------------------------------------------------------
+window.addEventListener('load', function() {
+    var modal = document.getElementById("myModal");
+    var closeBtn = document.getElementsByClassName("close")[0];
+    var modalContent = document.querySelector(".modal-content");
+  
+    modal.style.display = "block";
+  
+    closeBtn.onclick = function() {
+      modal.style.display = "none";
+    }
+  
+    window.addEventListener('click', function(event) {
+      if (event.target == modal || event.target == modalContent) {
+        modal.style.display = "none";
+      }
+    });
+  
+    window.addEventListener('touchstart', function(event) {
+      if (event.target == modal || event.target == modalContent) {
+        modal.style.display = "none";
+      }
+    });
+  });
+  
+  
+  
+  
