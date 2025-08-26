@@ -558,7 +558,7 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
   font-size: 1rem;
 }
 
-.popup a:link, a:visited, a:active {
+.popup a:link, a:active {
   color: var(--white);
   text-decoration: none;
 }
@@ -613,7 +613,7 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
     font-size: 18px;
     }
 
-    .popup a:link, a:visited, a:active {
+    .popup a:link, a:active {
     color: white;
     border-bottom: none;
     border-width: 1.5px;
