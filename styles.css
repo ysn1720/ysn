@@ -518,3 +518,108 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
   }
 }
 
+/* alert */
+
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--alertgreen);
+  border-radius: 8px;
+  padding: 35px;
+  width: 490px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  color: var(--white);
+  margin: 0;
+}
+
+.close {
+  position: absolute;
+  top: 7px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.announcement {
+  font-size: 26px;
+  margin-bottom: 2px;
+}
+
+.info {
+  margin-bottom: 15px;
+}
+
+.popup .eng-txt,
+{
+  font-size: 1rem;
+}
+
+.popup a:link, a:visited, a:active {
+  color: var(--white);
+  text-decoration: none;
+}
+
+
+
+.modal-active {
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 580px) {
+  .popup {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 1000;
+    padding: 30px 30px;
+    width: 90vw;
+  }
+  }
+
+  @media only screen and (max-width: 420px) {
+
+    .announcement {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+    }
+
+    .popup {    
+    position: fixed;
+    left: 50%;
+    top: 45%;
+    z-index: 1000;
+    padding: 18px  18px;
+    width: 90vw;
+    }
+
+    .popup .jp-txt {
+    font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", -apple-system, BlinkMacSystemFont, Hiragino Sans, Hiragino Kaku Gothic ProN, meiryo, sans-serif;
+    }
+
+    .popup .eng-txt {
+    letter-spacing: var(--letterspace01);
+    font-size: 1rem;
+    }
+
+    .info {
+    margin-bottom: 15px;
+    }
+
+    .modal-active {
+    font-size: 18px;
+    }
+
+    .popup a:link, a:visited, a:active {
+    color: white;
+    border-bottom: none;
+    border-width: 1.5px;
+    border-color: white;
+    } 
+  
+  } 
+   
+
