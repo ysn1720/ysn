@@ -518,7 +518,8 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
   }
 }
 
-/* alert */
+
+/* popup */
 
 .popup {
   display: none;
@@ -563,63 +564,37 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
   text-decoration: none;
 }
 
-
-
 .modal-active {
   font-size: 20px;
 }
 
-@media only screen and (max-width: 580px) {
-  .popup {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    z-index: 1000;
-    padding: 30px 30px;
-    width: 90vw;
-  }
-  }
+
 
   @media only screen and (max-width: 420px) {
 
     .announcement {
-    font-size: 1.3rem;
+    font-size: 2rem;
     margin-bottom: 2px;
     }
 
     .popup {    
     position: fixed;
-    left: 50%;
-    top: 45%;
     z-index: 1000;
-    padding: 18px  18px;
     width: 90vw;
     }
 
-    .popup .jp-txt {
-    font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", -apple-system, BlinkMacSystemFont, Hiragino Sans, Hiragino Kaku Gothic ProN, meiryo, sans-serif;
+    .jp-txt-popup {
+      font-size: 12px;
     }
 
     .popup .eng-txt {
     letter-spacing: var(--letterspace01);
-    font-size: 1rem;
-    }
-
-    .info {
-    margin-bottom: 15px;
     }
 
     .modal-active {
     font-size: 18px;
     }
 
-    .popup a:link, a:active {
-    color: white;
-    border-bottom: none;
-    border-width: 1.5px;
-    border-color: white;
-    } 
-  
   } 
    
 
