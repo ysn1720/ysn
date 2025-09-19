@@ -561,12 +561,9 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
 
 .popup a:link, a:active {
   color: var(--white);
-  text-decoration: none;
+  text-decoration: underline solid 1px ;
 }
 
-.modal-active {
-  font-size: 20px;
-}
 
 
 
