@@ -547,7 +547,7 @@ document.addEventListener('click', () => {
     if (hidden.length) {
       const el = hidden[0];
       el.classList.remove('hide');
-      el.style.transform = baseTransform.get(el); // 復活時は初期位置
+      el.style.transform = ''; // 復活時は初期位置
       scrollY.set(el, 0); // スクロール量リセット
       if (el.tagName === 'VIDEO') el.play();
     }
@@ -555,5 +555,6 @@ document.addEventListener('click', () => {
   }
 });
 
+  
   
   
