@@ -129,12 +129,12 @@ top
   ========================= */
   .p1  { width: 90%!important; }
   .p2  { width: 80%!important; }
+  .p3  { width: 90%!important; }
   .p4  { width: 100%!important; }
   .p5  { width: 82%!important; }
   .p6  { width: 95%!important; }
+    .p8  { width: 95%!important; }
   .p7  { width: 90%!important; }
-  .p8  { width: 95%!important; }
-
   .p9  { width: 90%!important; }
   .p11 { width: 70%!important; }
   .p12 { width: 90%!important; }
@@ -163,8 +163,8 @@ top
   .p4  { transform: translate(-50%, -50%) ; }
   .p5  { transform: translate(-50%, -50%) ; }
   .p6  { transform: translate(-50%, -50%) ; }
+    .p8  { transform: translate(-50%, -50%); }
   .p7  { transform: translate(-50%, -50%) ; }
-  .p8  { transform: translate(-50%, -50%); }
   .p9  { transform: translate(-50%, -50%) ; }
   .p10 { transform: translate(-50%, -50%) ; }
   .p11 { transform: translate(-50%, 20%) ; }
@@ -196,3 +196,4 @@ top
   .p32 { transform: translate(-50%, -50%)  ; }
 
   .p33 { transform: translate(-50%, -50%) ; }
+}
