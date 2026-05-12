@@ -45,7 +45,7 @@ text-align: center;
 @media (max-width: 500px) {
 .testtext{
   font-size: 13px;
-  transform: rotate(10deg)translate(-50%, -50%);
+  transform:translate(-50%, -50%);
 }
 }
 
@@ -143,7 +143,7 @@ top
   .image-stack img,
   .image-stack video {
     position: absolute;
-    /* width: 200px; */
+    width: 200px;
     height: auto;
 
     left: 50%;
