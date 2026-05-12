@@ -110,92 +110,143 @@ resultElement.textContent = years + " years + " + days + " days";
 
 // ---------------------------------------------------------------logo rotate
 
+
+// ---------------------------------------------------------------logo rotate
+
 document.addEventListener('DOMContentLoaded', function () {
-  const contentElements = document.querySelectorAll('.leftside, .gallery-container, .calendar-container');
+
+  const contentElements = document.querySelectorAll(
+    '.leftside, .gallery-container, .calendar-container, #stack'
+  );
+
+
   const logoElements = document.querySelectorAll('.logoA, .logoB, .logoC');
 
-  // Initial rotation values for logos
   const initialRotationMap = {
-    logoA: 0,   // Start at 0 degrees
-    logoB: 90,  // Start at 90 degrees
-    logoC: 0,  // Start at 45 degrees
+    logoA: 0,
+    logoB: 90,
+    logoC: 0,
+  };
+
+  const maxRotationMap = {
+    logoA: 30,
+    logoB: 260,
+    logoC: 280,
   };
 
 
-  contentElements.forEach(function (contentsElement) {
-    contentsElement.addEventListener('scroll', function () {
-      console.log('Scrolling:', contentsElement); // debug
-      updateRotation(contentsElement); 
+  // 2025 stackで使う外部変数（存在しないときの保険）
+  const stack = document.getElementById('stack');
+  const media = window.media || (stack ? [...stack.querySelectorAll('img, video, a')] : []);
+
+  const scrollYMap = window.scrollYMap || new Map();
+
+
+  // -------------------------
+  // 初期ローテーション
+  // -------------------------
+  logoElements.forEach(logoElement => {
+
+    const logoClass = Array.from(logoElement.classList)
+      .find(cls => cls in initialRotationMap);
+
+    if (!logoClass) return;
+
+    logoElement.style.transform =
+      `rotate(${initialRotationMap[logoClass]}deg)`;
+
+    logoElement.addEventListener('click', () => {
+      logoElement.style.opacity = '0';
+      setTimeout(() => logoElement.style.display = 'none', 300);
     });
   });
 
-  // logo hiding by click
-  logoElements.forEach(function (logoElement) {
-    logoElement.addEventListener('click', function () {
-      hideLogo(logoElement);
-    });
+  // -------------------------
+  // 回転更新関数
+  // -------------------------
+  function updateRotation(el) {
 
-    // Set initial rotation for each logo
-    const logoClass = Array.from(logoElement.classList).find(cls => initialRotationMap[cls]);
-    if (logoClass) {
-      const initialRotation = initialRotationMap[logoClass];
-      logoElement.style.transform = `rotate(${initialRotation}deg)`;
+    let scrollPosition = 0;
+    let maxScroll = 0;
+
+    // =========================
+    // stack（2025）
+    // =========================
+    if (el && el.id === 'stack') {
+
+      if (!media.length) return;
+
+      const visible = media.filter(m => !m.classList.contains('hide'));
+      if (!visible.length) return;
+
+      const top = visible[visible.length - 1];
+
+      scrollPosition = Math.abs((scrollY?.get?.(top)) || 0);
+      maxScroll = 3000;
     }
-  });
 
-  // logo lotatation by scroll
-  function updateRotation(contentsElement) {
-    let scrollPosition = 0, maxScroll = 0;
-
-    if (
-      contentsElement.classList.contains('leftside') || 
-      contentsElement.classList.contains('calendar-container')
+    // =========================
+    // vertical scroll
+    // =========================
+    else if (
+      el.classList.contains('leftside') ||
+      el.classList.contains('calendar-container')
     ) {
-      // vertical
-      scrollPosition = contentsElement.scrollTop;
-      maxScroll = contentsElement.scrollHeight - contentsElement.clientHeight;
-    } else if (contentsElement.classList.contains('gallery-container')) {
-      // horizontal
-      scrollPosition = contentsElement.scrollLeft;
-      maxScroll = contentsElement.scrollWidth - contentsElement.clientWidth;
-    } else {
-      // 
-      console.warn('No matching class for scroll behavior:', contentsElement);
+      scrollPosition = el.scrollTop;
+      maxScroll = el.scrollHeight - el.clientHeight;
+    }
+
+    // =========================
+    // horizontal scroll
+    // =========================
+    else if (el.classList.contains('gallery-container')) {
+      scrollPosition = el.scrollLeft;
+      maxScroll = el.scrollWidth - el.clientWidth;
+    }
+
+    else {
       return;
     }
 
-    const maxRotationMap = {
-      logoA: 30, 
-      logoB: 260, 
-      logoC: 280, 
-    };
+    // -------------------------
+    // apply rotation
+    // -------------------------
+    logoElements.forEach(logo => {
 
-    // 
-    logoElements.forEach(function (logoElement) {
-      if (logoElement) {
-        const logoClass = Array.from(logoElement.classList).find(cls => maxRotationMap[cls]);
-        if (logoClass) {
-          const maxRotation = maxRotationMap[logoClass];
-          const initialRotation = initialRotationMap[logoClass] || 0;
-          const rotation = maxScroll > 0 ? (scrollPosition / maxScroll) * maxRotation : 0;
+      const logoClass = Array.from(logo.classList)
+        .find(cls => cls in maxRotationMap);
 
-          // Combine initial rotation with calculated rotation
-          logoElement.style.transform = `rotate(${initialRotation + rotation}deg)`;
-        }
-      }
+      if (!logoClass) return;
+
+      const base = initialRotationMap[logoClass];
+      const max = maxRotationMap[logoClass];
+
+      const progress = maxScroll > 0
+        ? scrollPosition / maxScroll
+        : 0;
+
+      logo.style.transform =
+        `rotate(${base + progress * max}deg)`;
     });
   }
 
-  //
-  function hideLogo(logoElement) {
-    if (logoElement) {
-      logoElement.style.transition = 'opacity 0.3s'; 
-      logoElement.style.opacity = '0'; 
-      setTimeout(function () {
-        logoElement.style.display = 'none'; 
-      }, 300);
+  // -------------------------
+  // scroll listeners
+  // -------------------------
+  contentElements.forEach(el => {
+
+    if (el.id === 'stack') {
+      // wheel側で動くので scroll は補助
+      return;
     }
-  }
+
+    el.addEventListener('scroll', () => {
+      updateRotation(el);
+    });
+  });
+
+  // stackはwheel側から呼ぶためグローバル化
+  window.updateRotation = updateRotation;
 });
 
 
@@ -389,6 +440,7 @@ function closeModalContent() {
 });
 
 
+
 // // alert--------------------------------------------------------------
 window.addEventListener('load', function() {
     var modal = document.getElementById("myModal");
@@ -414,6 +466,94 @@ window.addEventListener('load', function() {
     });
   });
   
-  
+
+
+
+
+  // 2025--------------------------------------------------------------
+
+const stack = document.getElementById('stack');
+const media = [...stack.querySelectorAll('img, video, a')];
+
+let restoring = false;
+
+// 初期 transform を保存
+const baseTransform = new Map();
+const scrollY = new Map(); // ★ ここで各要素ごとのスクロール量を保持
+
+media.forEach(el => {
+  const t = window.getComputedStyle(el).transform;
+  baseTransform.set(el, t === 'none' ? 'translate(0px,0px)' : t);
+  scrollY.set(el, 0); // 初期スクロール量 0
+  if (el.tagName === 'VIDEO') el.play();
+});
+
+// ホイールで一番上だけスクロール
+document.addEventListener('wheel', e => {
+
+  // 500px以下では無効
+  if (window.innerWidth <= 500) return;
+
+  const visible = media.filter(el => !el.classList.contains('hide'));
+  if (!visible.length) return;
+
+  const top = visible[visible.length - 1];
+
+  // メディアの高さ
+  let mediaHeight;
+  if (top.tagName === 'IMG' || top.tagName === 'A') {
+    const img = top.tagName === 'A' ? top.querySelector('img') : top;
+    mediaHeight = img.naturalHeight * (img.clientWidth / img.naturalWidth);
+  } else if (top.tagName === 'VIDEO') {
+    mediaHeight = top.videoHeight * (top.clientWidth / top.videoWidth);
+  }
+
+  // 初期 transform Y
+  const base = baseTransform.get(top);
+  const match = base.match(/translate\([^\s,]+,\s*([-\d.]+)px\)/);
+  const initialY = match ? parseFloat(match[1]) : 0;
+
+  // ★ 現在のスクロール量から始める
+  let y = scrollY.get(top) || 0;
+  const scrollSpeed = 1; // 速度調整
+  y -= e.deltaY * scrollSpeed;
+
+  // 上下無限スクロール
+  top.style.transform = `${base} translateY(${y}px)`;
+
+  // スクロール量を保存
+  scrollY.set(top, y);
+  // 追加
+updateRotation(stack);
+
+  e.preventDefault();
+}, { passive: false });
+
+// クリックで消す／復活
+document.addEventListener('click', () => {
+  const visible = media.filter(el => !el.classList.contains('hide'));
+  if (!restoring) {
+    if (visible.length) {
+      const top = visible[visible.length - 1];
+      if (top.tagName === 'VIDEO') {
+        top.pause();
+        top.currentTime = 0;
+      }
+      top.classList.add('hide');
+    }
+    if (!media.some(el => !el.classList.contains('hide'))) restoring = true;
+  } else {
+    const hidden = media.filter(el => el.classList.contains('hide'));
+    if (hidden.length) {
+      const el = hidden[0];
+      el.classList.remove('hide');
+      el.style.transform = baseTransform.get(el); // 復活時は初期位置
+      scrollY.set(el, 0); // スクロール量リセット
+      if (el.tagName === 'VIDEO') el.play();
+    }
+    if (!media.some(el => el.classList.contains('hide'))) restoring = false;
+  }
+});
+
   
   
