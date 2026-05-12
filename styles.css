@@ -1,3 +1,4 @@
+
 *, :after, :before {
   margin:0; padding:0;
   -webkit-box-sizing: border-box;
@@ -419,6 +420,7 @@ body.sub .footer_container{
 @media only screen and (max-width: 720px) {
   .footer {
     flex-direction: row;
+    z-index: 999;
   }
 
   .flex-left {
@@ -581,7 +583,6 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
     padding:26px;
     }
 
-
     .jp-txt-popup {
       font-size: 12px;
     }
@@ -590,8 +591,7 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
     letter-spacing: var(--letterspace01);
     }
 
-
+  
 
   } 
    
-
