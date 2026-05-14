@@ -22,7 +22,7 @@
 }
 
 .link-layer {
-  pointer-events: auto; /* クリック可能にする */
+  pointer-events: auto; 
   display: block;
 }
 
@@ -88,7 +88,7 @@ top
 .p29 { left: -50px; top: 0px; z-index: 4; width: 680px !important;}
 
 .p30 { left: 50px; top: 50px; z-index: 3; width: 90% !important;}
-.p31 { right: 60px; top: 635px; z-index: 2; }
+.p31 { right: 360px; top: 52px; z-index: 2; }
 .p32 { right: 140px; bottom: -20px; z-index: 1; }
 .p33 { left: 0px; top: 0px; z-index: 1; width: 680px;}
 
