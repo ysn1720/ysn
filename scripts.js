@@ -556,5 +556,32 @@ document.addEventListener('click', () => {
 });
 
   
-  
+  media.forEach(el => {
+
+  const t = window.getComputedStyle(el).transform;
+
+  baseTransform.set(
+    el,
+    t === 'none'
+      ? 'translate(0px,0px)'
+      : t
+  );
+
+  scrollY.set(el, 0);
+
+  // ---------------------------------
+  // PCで p0 を最初から hidden
+  // ---------------------------------
+
+  if (
+    window.innerWidth > 500 &&
+    el.classList.contains('mobile-only')
+  ) {
+    el.classList.add('hide');
+  }
+
+  if (el.tagName === 'VIDEO') {
+    el.play();
+  }
+});
   
