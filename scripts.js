@@ -1000,3 +1000,10 @@ media.forEach(el => {
     el.play();
   }
 });
+
+
+document.querySelector('.txtcontents')
+  .classList.add('active');
+
+document.querySelector('.image-stack')
+  .classList.add('text-mode');
