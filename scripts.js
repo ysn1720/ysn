@@ -1,3 +1,5 @@
+
+
 // ---------------------------------------------------------------
 // dark mode
 // ---------------------------------------------------------------
@@ -837,7 +839,12 @@ document.addEventListener('wheel', e => {
 let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
-    touchStartY = e.touches[0].clientY;
+
+    const visible = media.filter(el => !el.classList.contains('hide'));
+
+    if (visible.length === 1) {
+        touchStartY = e.touches[0].clientY;
+    }
 });
 
 document.addEventListener('touchmove', e => {
@@ -848,6 +855,9 @@ document.addEventListener('touchmove', e => {
     if (visible.length > 1) return;
 
     const top = visible[visible.length - 1];
+
+        // テキストのときはブラウザに任せる
+    if (top.tagName === 'P') return;
 
     const deltaY = touchStartY - e.touches[0].clientY;
     touchStartY = e.touches[0].clientY;
@@ -871,11 +881,25 @@ document.addEventListener('touchmove', e => {
 // stack click only
 // ---------------------------------------------------------------
 
+
+
+// ↓ ここに追加
+const testtext = document.querySelector('.testtext');
+
+testtext.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+testtext.addEventListener('touchstart', (e) => {
+    e.stopPropagation();
+});
+
 document.addEventListener('click', (e) => {
 
     // darkmode button
     if (e.target.closest('#icon-mode')) return;
 
+    
     // logos
     if (
         e.target.closest(
@@ -886,13 +910,25 @@ document.addEventListener('click', (e) => {
     // modal
     if (e.target.closest('#modal')) return;
 
-    // stack only
-    if (!e.target.closest('#stack')) return;
+
+
+
+
+// stack only
+if (!e.target.closest('#stack')) return;
+
+// テキストエリアのクリックは無視
+if (e.target.closest('.testtext')) return;
 
     const visible =
         media.filter(el =>
             !el.classList.contains('hide')
         );
+
+        
+// テキストエリアのクリックは無視
+if (e.target.closest('.testtxt')) return;
+
 
 if (!restoring) {
 
