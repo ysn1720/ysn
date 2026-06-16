@@ -303,6 +303,13 @@ font-size: 13.5px;
   display: flex;
 }
 
+@media (max-width:720px){
+.contents{
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+}
+}
 
 
 /* top-calendar */
