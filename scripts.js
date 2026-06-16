@@ -768,6 +768,9 @@ media.forEach(el => {
 // wheel scroll
 document.addEventListener('wheel', e => {
 
+  if (e.target.closest('.testtext')) {
+        return;
+    }
 
 
     const visible =
@@ -840,7 +843,13 @@ document.addEventListener('touchstart', e => {
     touchStartY = e.touches[0].clientY;
 });
 
-document.addEventListener('touchmove', e => {
+document.getElementById('stack').addEventListener('touchmove', e => {
+
+document.getElementById('stack').addEventListener('touchmove', e => {
+
+    if (e.target.closest('.testtext')) {
+        return; // ★ここ超重要
+    }
 
     if (document.body.classList.contains('allow-select')) {
         return;
