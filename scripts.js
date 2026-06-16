@@ -768,9 +768,11 @@ media.forEach(el => {
 // wheel scroll
 document.addEventListener('wheel', e => {
 
-  if (e.target.closest('.testtext')) {
-        return;
-    }
+    if (e.target.closest('.testtext')) return;
+
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
+
 
 
     const visible =
@@ -837,27 +839,32 @@ document.addEventListener('wheel', e => {
 
 }, { passive: false });
 
+
+
+
+
 let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
     touchStartY = e.touches[0].clientY;
 });
 
-document.getElementById('stack').addEventListener('touchmove', e => {
+
+
+
 
 document.getElementById('stack').addEventListener('touchmove', e => {
 
-    if (e.target.closest('.testtext')) {
-        return; // ★ここ超重要
-    }
+    // ★テキスト選択中は完全に何もしない
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
 
-    if (document.body.classList.contains('allow-select')) {
-        return;
-    }
+    // ★テキスト領域は完全に除外
+    if (e.target.closest('.testtext')) return;
 
+    if (document.body.classList.contains('allow-select')) return;
 
     const visible = media.filter(el => !el.classList.contains('hide'));
-
     if (!visible.length) return;
     if (visible.length > 1) return;
 
