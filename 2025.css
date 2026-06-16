@@ -57,6 +57,12 @@ text-align: center;
   -webkit-touch-callout: default;
 }
 
+.txtcontents,
+.testtext,
+.testtext p {
+    touch-action: auto;
+}
+
 
 /* Firefox */
 ::-moz-selection {
