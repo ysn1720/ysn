@@ -45,6 +45,16 @@ top: 70%;
 left: 50%;
 transform: translate(-50%, -50%);
 text-align: center;
+  }
+
+
+.testtext,
+.testtext p {
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-touch-callout: default;
+}
+
 
 /* Firefox */
 ::-moz-selection {
@@ -58,7 +68,15 @@ text-align: center;
   color:  #fdd2ff;
 }
 
+
+
+.testtext,
+.testtext p {
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-touch-callout: default;
 }
+
 
 
 
