@@ -2,9 +2,9 @@
 
 .contents {
 display: flex;
-height: 90vh;
-overflow: hidden; /* no scroll parent*/
-flex-grow: 1;  
+flex: 1;
+min-height: 0;
+overflow: hidden;
 flex-wrap: nowrap;
 }
 
@@ -20,7 +20,7 @@ border-right: 1px solid var(--gray);
 
 @media (max-width: 720px) {
 .contents {
-height: 100%; 
+height: auto; 
 flex-wrap: wrap;
 overflow:scroll; 
 }
@@ -279,25 +279,30 @@ font-size: 0.7rem;
 
 .rightside {
 display: flex;
-flex: 1; 
-height: 100vh;
-position: relative; 
-overflow-x: scroll;
+flex: 1;
+min-width: 0;
+min-height: 0;
+position: relative;
+overflow: visible;
+/* background-color: red; */
 }
 
 .gallery-container {
 flex: 1;
 display: flex;
-overflow-x: scroll;
-overflow-y: auto;
+
+overflow-x: hidden;
+ overflow-y:auto;
+
 white-space: nowrap;
 max-width: 100%;
+
 position: relative;
-scroll-behavior: smooth;
--ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;     /* Firefox */
-overflow-x: scroll;
-overflow-y: hidden;
+
+min-width: 0;
+min-height: 0;
+
+-webkit-overflow-scrolling: touch;
 }
 
 .gallery-container::-webkit-scrollbar {
@@ -320,13 +325,16 @@ overflow-y: hidden;
 /* pictures */
 .gallery-item {
   height: 100%;
+      width:auto;
 cursor: pointer;
 position: relative; /* Ensure we can animate the item independently */
 animation: scroll-hint 4s ease-out forwards;
-display: inline-block; /* Ensures the item stays inline and part of the scroll */
+display: block; /* Ensures the item stays inline and part of the scroll */
 line-height: 0;
 padding: 0;
 margin: 0;
+    flex-shrink: 0;
+
 }
 
 @keyframes scroll-hint {
@@ -395,10 +403,12 @@ transition: transform 0.2s ease; /* animation with hover */
 
 @media only screen and (max-width: 720px){
 .rightside {
+    height: 100%;
 display: flex;
 flex: 0.3; 
 border-right: 0px;
 overflow: auto;
+
 }
 
 .gallery-container {
@@ -414,8 +424,8 @@ object-fit: cover;
 aspect-ratio: 1 / 1; /* 1 x 1 */
 animation: none !important;
 cursor: pointer;
-animation: scroll-hint 2s ease-out forwards; 
 position: relative;
+    touch-action: pan-y;
 }
 
 
@@ -428,6 +438,7 @@ position: relative;
 .rightside::before,
 .rightside::after {
 display:none;
+    content:none;
 }
 
 }
