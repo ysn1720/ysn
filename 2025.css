@@ -59,7 +59,7 @@ text-align: center;
 @media (max-width: 500px) {
 .testtext{
   width: 90%;
-  top: 70%;
+  top: 80%;
   font-size: 12px;
   transform: translate(-50%, -50%);
 }
