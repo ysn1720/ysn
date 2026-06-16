@@ -842,6 +842,11 @@ document.addEventListener('touchstart', e => {
 
 document.addEventListener('touchmove', e => {
 
+    if (document.body.classList.contains('allow-select')) {
+        return;
+    }
+
+
     const visible = media.filter(el => !el.classList.contains('hide'));
 
     if (!visible.length) return;
