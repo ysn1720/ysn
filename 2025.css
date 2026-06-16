@@ -26,18 +26,15 @@
   display: block;
 }
 
-.hide { opacity: 0;    pointer-events: none; }
+.hide { opacity: 0;  
+    pointer-events: none; }
 
 
 .txtcontents{
   position: absolute;
   width: 100%;
   height: 100%;
-
-
 }
-
-
 
 .testtext{
     padding: 20px;
@@ -49,10 +46,19 @@ left: 50%;
 transform: translate(-50%, -50%);
 text-align: center;
 
+/* Firefox */
+::-moz-selection {
+  background-color: var(rgb(204, 255, 0));
+  color:  #fdd2ff;
 }
 
+/* Chrome / Edge / Safari */
+::selection {
+  background-color: var(rgb(204, 255, 0));
+  color:  #fdd2ff;
+}
 
-
+}
 
 
 
