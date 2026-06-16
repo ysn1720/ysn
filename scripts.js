@@ -855,12 +855,16 @@ document.addEventListener('touchstart', e => {
 
 document.getElementById('stack').addEventListener('touchmove', e => {
 
-    // ★テキスト選択中は完全に何もしない
     const selection = window.getSelection();
-    if (selection && selection.toString().length > 0) return;
+    const hasSelection =
+        selection && selection.toString().length > 0;
 
-    // ★テキスト領域は完全に除外
-    if (e.target.closest('.testtext')) return;
+    // テキスト上 + 選択中は「スタック操作だけ止める」
+    const onText = e.target.closest('.testtext');
+
+    if (onText || hasSelection) {
+        return; // ← ここ重要：preventDefaultしない
+    }
 
     if (document.body.classList.contains('allow-select')) return;
 
@@ -883,8 +887,7 @@ document.getElementById('stack').addEventListener('touchmove', e => {
 
     updateRotation(stack);
 
-    e.preventDefault();
-
+    e.preventDefault(); // ← スタック操作時だけ効く
 }, { passive: false });
 
 
