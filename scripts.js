@@ -876,7 +876,16 @@ document.addEventListener('touchmove', e => {
 // stack click only
 // ---------------------------------------------------------------
 
+
+
 document.addEventListener('click', (e) => {
+
+    const selection = window.getSelection();
+
+    if (selection && selection.toString().length > 0) {
+        return;
+    }
+
 
     // darkmode button
     if (e.target.closest('#icon-mode')) return;
