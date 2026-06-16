@@ -1,999 +1,195 @@
-// ---------------------------------------------------------------
-// dark mode
-// ---------------------------------------------------------------
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const body = document.body;
-    const iconContainer = document.getElementById("icon-mode");
-    const icon = iconContainer
-        ? iconContainer.querySelector("img")
-        : null;
-
-    const isTopPage = body.classList.contains("top");
-
-    if (!iconContainer || !icon) {
-        console.error("#icon-mode element or img not found!");
-        return;
-    }
-
-    // load theme
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-        body.classList.add("mode_A");
-    } else {
-        body.classList.remove("mode_A");
-    }
-
-    // icon update
-    function updateIcon() {
-
-        if (body.classList.contains("mode_A")) {
-
-            // dark mode
-            icon.src = isTopPage
-                ? "./bau/img/mode_y.svg"
-                : "./bau/img/mode_g.svg";
-
-        } else {
-
-            // light mode
-            icon.src = isTopPage
-                ? "./bau/img/mode_g.svg"
-                : "./bau/img/mode_y.svg";
-        }
-    }
-
-    updateIcon();
-
-    // click
-    iconContainer.addEventListener("click", (e) => {
-
-        // prevent global click
-        e.stopPropagation();
-
-        body.classList.toggle("mode_A");
-
-        const newTheme = body.classList.contains("mode_A")
-            ? "dark"
-            : "light";
-
-        localStorage.setItem("theme", newTheme);
-
-        updateIcon();
-    });
-});
-
-
-
-// ---------------------------------------------------------------
-// clock
-// ---------------------------------------------------------------
-
-function updateTime() {
-
-    var now = luxon.DateTime.local();
-
-    var hours = now.hour;
-    var minutes = now.minute;
-    var seconds = now.second;
-
-    var date = now.toFormat('LLLL dd yyyy');
-    var timezone = now.zoneName;
-
-    var clockElement = document.getElementById('clock');
-    var dateElement = document.getElementById('date');
-    var timezoneElement = document.getElementById('timezone');
-
-    var timeString =
-        formatTime(hours) + ':' +
-        formatTime(minutes) + ':' +
-        formatTime(seconds);
-
-    clockElement.textContent = timeString;
-    dateElement.textContent = date;
-
-    var timeZoneAbbreviation =
-        getTimeZoneAbbreviation(timezone);
-
-    timezoneElement.textContent =
-        "(" + timeZoneAbbreviation + ")";
-}
-
-updateTime();
-
-setInterval(updateTime, 1000);
-
-function formatTime(time) {
-    return (time < 10)
-        ? '0' + time
-        : time;
-}
-
-function getTimeZoneAbbreviation(timezone) {
-
-    var timeZoneAbbreviations = {
-
-        "Asia/Tokyo": "JST",
-        "Asia/Shanghai": "CST",
-        "Asia/Kolkata": "IST",
-        "Asia/Bangkok": "ICT",
-        "Asia/Dubai": "GST",
-        "Asia/Seoul": "KST",
-        "Asia/Singapore": "SGT",
-        "Asia/Taipei": "CST",
-        "Asia/Hong_Kong": "HKT",
-
-        "America/Los_Angeles": "PST",
-        "America/New_York": "EST",
-
-        "Europe/London": "GMT",
-        "Europe/Paris": "CET",
-        "Europe/Berlin": "CET",
-    };
-
-    return timeZoneAbbreviations[timezone] || timezone;
-}
-
-
-
-// ---------------------------------------------------------------
-// count
-// ---------------------------------------------------------------
-
-const startDate = new Date(1720, 12, 1);
-
-const today = new Date();
-
-const timeDifference =
-    today.getTime() - startDate.getTime();
-
-const years = Math.floor(
-    timeDifference /
-    (1000 * 60 * 60 * 24 * 365)
-);
-
-const days = Math.floor(
-    (
-        timeDifference %
-        (1000 * 60 * 60 * 24 * 365)
-    ) /
-    (1000 * 60 * 60 * 24)
-);
-
-const resultElement =
-    document.getElementById('result');
-
-resultElement.textContent =
-    years + " years + " + days + " days";
-
-
-
-// ---------------------------------------------------------------
-// logo rotate
-// ---------------------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    const contentElements = document.querySelectorAll(
-        '.leftside, .gallery-container, .calendar-container, #stack'
-    );
-
-    const logoElements = document.querySelectorAll(
-        '.logoA, .logoB, .logoC'
-    );
-
-    const initialRotationMap = {
-        logoA: 0,
-        logoB: 90,
-        logoC: 0,
-    };
-
-    const maxRotationMap = {
-        logoA: 30,
-        logoB: 260,
-        logoC: 280,
-    };
-
-    const stack =
-        document.getElementById('stack');
-
-    const media = window.media ||
-        (
-            stack
-                ? [...stack.querySelectorAll('img, video, a, p')]
-                : []
-        );
-
-    const scrollYMap =
-        window.scrollYMap || new Map();
-
-    // initial rotation
-    logoElements.forEach(logoElement => {
-
-        const logoClass =
-            Array.from(logoElement.classList)
-                .find(cls => cls in initialRotationMap);
-
-        if (!logoClass) return;
-
-        logoElement.style.transform =
-            `rotate(${initialRotationMap[logoClass]}deg)`;
-
-        // logo click
-        logoElement.addEventListener('click', (e) => {
-
-            // prevent stack click
-            e.stopPropagation();
-
-            logoElement.style.opacity = '0';
-
-            setTimeout(() => {
-                logoElement.style.display = 'none';
-            }, 300);
-        });
-    });
-
-    // rotation update
-    function updateRotation(el) {
-
-        let scrollPosition = 0;
-        let maxScroll = 0;
-
-        // stack
-        if (el && el.id === 'stack') {
-
-            if (!media.length) return;
-
-            const visible =
-                media.filter(m =>
-                    !m.classList.contains('hide')
-                );
-
-            if (!visible.length) return;
-
-            const top =
-                visible[visible.length - 1];
-
-            scrollPosition =
-                Math.abs(
-                    (scrollY?.get?.(top)) || 0
-                );
-
-            maxScroll = 3000;
-        }
-
-        // vertical
-        else if (
-            el.classList.contains('leftside') ||
-            el.classList.contains('calendar-container')
-        ) {
-
-            scrollPosition = el.scrollTop;
-
-            maxScroll =
-                el.scrollHeight - el.clientHeight;
-        }
-
-        // horizontal
-        else if (
-            el.classList.contains('gallery-container')
-        ) {
-
-            scrollPosition = el.scrollLeft;
-
-            maxScroll =
-                el.scrollWidth - el.clientWidth;
-        }
-
-        else {
-            return;
-        }
-
-        // apply rotation
-        logoElements.forEach(logo => {
-
-            const logoClass =
-                Array.from(logo.classList)
-                    .find(cls => cls in maxRotationMap);
-
-            if (!logoClass) return;
-
-            const base =
-                initialRotationMap[logoClass];
-
-            const max =
-                maxRotationMap[logoClass];
-
-            const progress =
-                maxScroll > 0
-                    ? scrollPosition / maxScroll
-                    : 0;
-
-            logo.style.transform =
-                `rotate(${base + progress * max}deg)`;
-        });
-    }
-
-    // scroll listeners
-    contentElements.forEach(el => {
-
-        if (el.id === 'stack') return;
-
-        el.addEventListener('scroll', () => {
-            updateRotation(el);
-        });
-    });
-
-    window.updateRotation = updateRotation;
-});
-
-
-
-// ---------------------------------------------------------------
-// gallery slide
-// ---------------------------------------------------------------
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const gallery =
-        document.querySelector(".gallery-container");
-
-    const rightside =
-        document.querySelector(".rightside");
-
-    rightside.addEventListener("click", function (event) {
-
-        const galleryWidth = gallery.clientWidth;
-
-        const clickX =
-            event.clientX -
-            rightside.getBoundingClientRect().left;
-
-        const scrollAmount = 600;
-
-        if (clickX < galleryWidth / 2) {
-
-            gallery.scrollLeft -= scrollAmount;
-
-        } else {
-
-            gallery.scrollLeft += scrollAmount;
-        }
-    });
-});
-
-
-
-// ---------------------------------------------------------------
-// modal
-// ---------------------------------------------------------------
-
-const modal =
-    document.getElementById("modal");
-
-const modalImage =
-    document.getElementById("modal-image");
-
-const modalCaption =
-    document.getElementById("modal-caption");
-
-// gallery items
-const galleryItems =
-    document.querySelectorAll(
-        ".gallery-container .gallery-item"
-    );
-
-galleryItems.forEach((item) => {
-
-    item.addEventListener("click", (e) => {
-
-        e.stopPropagation();
-
-        modal.classList.add("open");
-
-        modalImage.src = item.src;
-
-        modalCaption.textContent =
-            item.getAttribute("data-caption") || "";
-    });
-});
-
-// thumbs
-const thumbItems =
-    document.querySelectorAll(
-        ".thumbs-container .picsinthumbs"
-    );
-
-thumbItems.forEach((item) => {
-
-    item.addEventListener("click", (e) => {
-
-        e.stopPropagation();
-
-        modal.classList.add("open");
-
-        modalImage.src = item.src;
-
-        modalCaption.textContent =
-            item.getAttribute("data-caption") || "";
-    });
-});
-
-
-
-// ---------------------------------------------------------------
-// modal slideshow
-// ---------------------------------------------------------------
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    const modal =
-        document.getElementById("modal");
-
-    const modalImg =
-        document.getElementById("modal-image");
-
-    const modalCaption =
-        document.getElementById("modal-caption");
-
-    const closeModal =
-        document.getElementById("close-btn");
-
-    const nextBtn =
-        document.getElementById("next-btn");
-
-    const prevBtn =
-        document.getElementById("prev-btn");
-
-    let currentGallery = [];
-    let currentIndex = 0;
-
-    function showModal(index) {
-
-        if (
-            index < 0 ||
-            index >= currentGallery.length
-        ) return;
-
-        currentIndex = index;
-
-        const imgElement =
-            currentGallery[currentIndex];
-
-        modalImg.src = imgElement.src;
-
-        modalCaption.textContent =
-            imgElement.getAttribute("data-caption");
-
-        modal.style.display = "block";
-
-        modal.classList.add("open");
-    }
-
-    // gallery1
-    const gallery1Items =
-        document.querySelectorAll(
-            "#gallery1 .gallery-item"
-        );
-
-    gallery1Items.forEach((item, index) => {
-
-        item.addEventListener("click", function (e) {
-
-            e.stopPropagation();
-
-            currentGallery =
-                Array.from(gallery1Items);
-
-            showModal(index);
-        });
-    });
-
-    // gallery2
-    const gallery2Items =
-        document.querySelectorAll(
-            "#gallery2 .picsinthumbs"
-        );
-
-    gallery2Items.forEach((item, index) => {
-
-        item.addEventListener("click", function (e) {
-
-            e.stopPropagation();
-
-            currentGallery =
-                Array.from(gallery2Items);
-
-            showModal(index);
-        });
-    });
-
-    // gallery3
-    const gallery3Items =
-        document.querySelectorAll(
-            "#gallery3 .picsinthumbs_3"
-        );
-
-    gallery3Items.forEach((item, index) => {
-
-        item.addEventListener("click", function (e) {
-
-            e.stopPropagation();
-
-            currentGallery =
-                Array.from(gallery3Items);
-
-            showModal(index);
-        });
-    });
-
-    // gallery4
-    const gallery4Items =
-        document.querySelectorAll(
-            "#gallery4 .picsinthumbs_4"
-        );
-
-    gallery4Items.forEach((item, index) => {
-
-        item.addEventListener("click", function (e) {
-
-            e.stopPropagation();
-
-            currentGallery =
-                Array.from(gallery4Items);
-
-            showModal(index);
-        });
-    });
-
-    // gallery5
-    const gallery5Items =
-        document.querySelectorAll(
-            "#gallery5 .picsinthumbs_5"
-        );
-
-    gallery5Items.forEach((item, index) => {
-
-        item.addEventListener("click", function (e) {
-
-            e.stopPropagation();
-
-            currentGallery =
-                Array.from(gallery5Items);
-
-            showModal(index);
-        });
-    });
-
-    // modal image
-    modalImg.addEventListener("click", function (event) {
-
-        event.stopPropagation();
-
-        const imgRect =
-            modalImg.getBoundingClientRect();
-
-        const imgClickX =
-            event.clientX - imgRect.left;
-
-        if (imgClickX < imgRect.width / 2) {
-
-            showModal(
-                currentIndex > 0
-                    ? currentIndex - 1
-                    : currentGallery.length - 1
-            );
-
-        } else {
-
-            showModal(
-                currentIndex < currentGallery.length - 1
-                    ? currentIndex + 1
-                    : 0
-            );
-        }
-    });
-
-    // next
-    nextBtn.addEventListener("click", function (event) {
-
-        event.stopPropagation();
-
-        if (
-            currentIndex <
-            currentGallery.length - 1
-        ) {
-
-            showModal(currentIndex + 1);
-
-        } else {
-
-            showModal(0);
-        }
-    });
-
-    // prev
-    prevBtn.addEventListener("click", function (event) {
-
-        event.stopPropagation();
-
-        if (currentIndex > 0) {
-
-            showModal(currentIndex - 1);
-
-        } else {
-
-            showModal(
-                currentGallery.length - 1
-            );
-        }
-    });
-
-    // modal outside click
-    modal.addEventListener("click", function (event) {
-
-        const modalRect =
-            modal.getBoundingClientRect();
-
-        const clickX = event.clientX;
-
-        if (
-            clickX <
-            modalRect.left + modalRect.width / 2
-        ) {
-
-            showModal(
-                currentIndex > 0
-                    ? currentIndex - 1
-                    : currentGallery.length - 1
-            );
-
-        } else {
-
-            showModal(
-                currentIndex < currentGallery.length - 1
-                    ? currentIndex + 1
-                    : 0
-            );
-        }
-    });
-
-    // close
-    closeModal.addEventListener("click", function (event) {
-
-        event.stopPropagation();
-
-        closeModalContent();
-    });
-
-    function closeModalContent() {
-
-        modalImg.src = "";
-
-        modalCaption.textContent = "";
-
-        modal.style.display = "none";
-
-        modal.classList.remove("open");
-    }
-});
-
-
-
-// ---------------------------------------------------------------
-// alert modal
-// ---------------------------------------------------------------
-
-window.addEventListener('load', function () {
-
-    var modal =
-        document.getElementById("myModal");
-
-    var closeBtn =
-        document.getElementsByClassName("close")[0];
-
-    var modalContent =
-        document.querySelector(".modal-content");
-
-    modal.style.display = "block";
-
-    closeBtn.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    window.addEventListener('click', function (event) {
-
-        if (
-            event.target == modal ||
-            event.target == modalContent
-        ) {
-
-            modal.style.display = "none";
-        }
-    });
-
-    window.addEventListener('touchstart', function (event) {
-
-        if (
-            event.target == modal ||
-            event.target == modalContent
-        ) {
-
-            modal.style.display = "none";
-        }
-    });
-});
-
-
-
-// ---------------------------------------------------------------
-// 2025 stack
-// ---------------------------------------------------------------
-
-const stack =
-    document.getElementById('stack');
-
-const media =
-    [...stack.querySelectorAll('img, video, a, p')];
-
-let restoring = false;
-
-// base transform
-const baseTransform = new Map();
-
-// scroll amount
-const scrollY = new Map();
-
-media.forEach(el => {
-
-    const t =
-        window.getComputedStyle(el).transform;
-
-    baseTransform.set(
-        el,
-        t === 'none'
-            ? 'translate(0px,0px)'
-            : t
-    );
-
-    scrollY.set(el, 0);
-
-    if (el.tagName === 'VIDEO') {
-        el.play();
-    }
-});
-
-// wheel scroll
-document.addEventListener('wheel', e => {
-
-    if (e.target.closest('.testtext')) return;
-
-    const selection = window.getSelection();
-    if (selection && selection.toString().length > 0) return;
-
-
-
-    const visible =
-        media.filter(el =>
-            !el.classList.contains('hide')
-        );
-
-    if (!visible.length) return;
-
-        // block scroll on mobile unless last item remains
-    if (window.innerWidth <= 500 && visible.length > 1) return;
-
-    const top =
-        visible[visible.length - 1];
-
-    let mediaHeight;
-
-    if (
-        top.tagName === 'IMG' ||
-        top.tagName === 'A'
-    ) {
-
-        const img =
-            top.tagName === 'A'
-                ? top.querySelector('img')
-                : top;
-
-        mediaHeight =
-            img.naturalHeight *
-            (img.clientWidth / img.naturalWidth);
-
-    } else if (top.tagName === 'VIDEO') {
-
-        mediaHeight =
-            top.videoHeight *
-            (top.clientWidth / top.videoWidth);
-    }
-
-    const base =
-        baseTransform.get(top);
-
-    const match =
-        base.match(
-            /translate\([^\s,]+,\s*([-\d.]+)px\)/
-        );
-
-    const initialY =
-        match ? parseFloat(match[1]) : 0;
-
-    let y = scrollY.get(top) || 0;
-
-    const scrollSpeed = 1;
-
-    y -= e.deltaY * scrollSpeed;
-
-    top.style.transform =
-        `${base} translateY(${y}px)`;
-
-    scrollY.set(top, y);
-
-    updateRotation(stack);
-
-    e.preventDefault();
-
-}, { passive: false });
-
-
-
-
-
-let touchStartY = 0;
-
-document.addEventListener('touchstart', e => {
-    touchStartY = e.touches[0].clientY;
-});
-
-
-
-
-
-document.getElementById('stack').addEventListener('touchmove', e => {
-
-    const selection = window.getSelection();
-    const hasSelection =
-        selection && selection.toString().length > 0;
-
-    // テキスト上 + 選択中は「スタック操作だけ止める」
-    const onText = e.target.closest('.testtext');
-
-    if (onText || hasSelection) {
-        return; // ← ここ重要：preventDefaultしない
-    }
-
-    if (document.body.classList.contains('allow-select')) return;
-
-    const visible = media.filter(el => !el.classList.contains('hide'));
-    if (!visible.length) return;
-    if (visible.length > 1) return;
-
-    const top = visible[visible.length - 1];
-
-    const deltaY = touchStartY - e.touches[0].clientY;
-    touchStartY = e.touches[0].clientY;
-
-    const base = baseTransform.get(top);
-    let y = scrollY.get(top) || 0;
-
-    y -= deltaY;
-
-    top.style.transform = `${base} translateY(${y}px)`;
-    scrollY.set(top, y);
-
-    updateRotation(stack);
-
-    e.preventDefault(); // ← スタック操作時だけ効く
-}, { passive: false });
-
-
-// ---------------------------------------------------------------
-// stack click only
-// ---------------------------------------------------------------
-
-
-
-document.addEventListener('click', (e) => {
-
-    const selection = window.getSelection();
-
-    if (selection && selection.toString().length > 0) {
-        return;
-    }
-
-
-    // darkmode button
-    if (e.target.closest('#icon-mode')) return;
-
-    // logos
-    if (
-        e.target.closest(
-            '.logoA, .logoB, .logoC'
-        )
-    ) return;
-
-    // modal
-    if (e.target.closest('#modal')) return;
-
-    // stack only
-    if (!e.target.closest('#stack')) return;
-
-    const visible =
-        media.filter(el =>
-            !el.classList.contains('hide')
-        );
-
-if (!restoring) {
-
-    if (visible.length === 1) {
-        restoring = true;
-        // fall through to restore below
-    } else {
-
-        const top = visible[visible.length - 1];
-
-        if (top.tagName === 'VIDEO') {
-            top.pause();
-            top.currentTime = 0;
-        }
-
-        top.classList.add('hide');
-    }
-}
-
-if (restoring) {
-
-    const hidden = media.filter(el => el.classList.contains('hide'));
-
-    if (hidden.length) {
-
-        const el = hidden[0];
-
-        el.classList.remove('hide');
-        el.style.transform = '';
-        scrollY.set(el, 0);
-
-        if (el.tagName === 'VIDEO') {
-            el.play();
-        }
-    }
-
-    if (!media.some(el => el.classList.contains('hide'))) {
-        restoring = false;
-    }
-}
-});
-
-
-media.forEach(el => {
-
-  const t = window.getComputedStyle(el).transform;
-
-  baseTransform.set(
-    el,
-    t === 'none'
-      ? 'translate(0px,0px)'
-      : t
-  );
-
-  scrollY.set(el, 0);
-
-  // ---------------------------------
-  // PCで p0 を最初から hidden
-  // ---------------------------------
-
-  if (
-    window.innerWidth > 500 &&
-    el.classList.contains('mobile-only')
-  ) {
-    el.classList.add('hide');
-  }
-
-  if (el.tagName === 'VIDEO') {
-    el.play();
-  }
-});
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YSN | ゆっくりしっかりのこす</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="header.css">
+<link rel="stylesheet" href="2024.css">
+<link rel="stylesheet" href="2025.css">
+<link rel="shortcut icon" href="bau/img/favicon.ico"/>
+
+<!-- * Website designed and developed by Minami Shimakage. Hershey Futural, used for English text, is by Paul Bernhard. * -->
+
+</head>
+<body class="sub">
+
+    <div class="logoA"></div>       
+    <div class="logoB"></div>
+    <div class="logoC"></div>
+    
+    <!-- header -->
+    <div class="header">
+
+        <div class="logo-container">
+        <a href="index.html">
+        <img class="ysn-logo" src="bau/img/logo/ysn_y_4pt.svg"></a>
+        </div> 
+        
+        <div class="title-container">
+        <div class="title-header">
+        <img class="ysn-title" src="bau/img/ysn_title_y.svg">
+        </div>
+        </div>
+        
+        <div class="right-container">
+        <div lang="en" id="updated">Refreshed: 15 June 2026</div>
+        <div id="icon-mode"><img alt="Dark Mode Toggle"></div>
+        <div id="fullscreen"></div>
+        </div>      
+        
+    </div>   
+    
+<!-- main contents -->
+<div class="contents">
+
+
+
+<div class="image-stack" id="stack">
+<!-- 
+bottom
+↓
+top
+
+-->
+    <div class="txtcontents">
+
+<div class="testtext">
+<p>
+YSN 2025 <br>
+うごく かさなる “きもの”になる<br>
+2025/10/1〜12<br>
+Gallery SUGATA<br>
+<br><br>
+&#xFF3B;いっしょにうごく｜Sync&#xFF3D;<br>
+カラダが動くと、シワが生まれる：着物のかさなりを「歩く」から考える<br>
+BASSDRUM&#40;池田航成、小川恭平、毛原大樹&#xFF09;<br>
+協力：安藤隆一郎&#40;京都市立芸術大学&#xFF09;<br>
+<br>
+
+
+&#xFF3B;くらべる｜With Variety&#xFF3D;<br>
+「世の中と着物とあなた」のイロイロ：正しい着物の着方ってあるの？<br>
+服部和子きもの学院<br>
+小形道正&#40;大妻女子大学&#xFF09;<br>
+<br>
+&#xFF3B;かさなる｜Overlap&#xFF3D;<br>
+パンッ、シュッ、ザザ。：着付けのまわりの音を集める<br>
+岡本太玖斗<br>
+撮影協力：武田真彦&#40;サウンドデザイン&#xFF09;、服部青海&#40;着付けサポート&#xFF09;<br>
+<br>
+&#xFF3B;ととのえる｜How to Place&#xFF3D;<br>
+&#40;“きもの”の&#xFF09;しまいかた<br>
+福井裕孝<br>
+参加者：伊藤千鶴、黒沼雄太、つくだはるか、はしもとさゆり、吉兼杏奈&#40;ワークショップのみ&#xFF09;／
+<br>撮影：山口梓沙&#40;写真&#xFF09;、宮澤響&#40;映像&#xFF09;<br>
+<br>
+YSN Studio<br>
+ディレクション：須田伸一／アートディレクション・デザイン：米山菜津子／<br>
+空間設計：Siin Siin／什器制作：SCHEME CO., LTD.／<br>
+編集：わかめかのこ&#40;さりげなく&#xFF09;／プロジェクトマネージメント：原田ふくみ／<br>
+記録撮影：吉川周作／WEBデザイン・開発：島影南美／<br>
+責任編集：矢代真也&#40;矢代仁&#xFF09;<br>
+
+</p>
+</div>
+</div>
+
+ <img class="p46" src="bau/img/2025pic/P1037307z.webp">
+<img class="p45" src="bau/img/2025pic/P1037276.webp">
+<img class="p44" src="bau/img/2025pic/P1037254z.webp">
+ <!--<img class="p43" src="bau/img/2025pic/P1037194.webp">
+<img class="p42" src="bau/img/2025pic/P1037192.webp">
+<img class="p41" src="bau/img/2025pic/P1037168.webp">
+<img class="p40" src="bau/img/2025pic/P1037161.webp">
+
+<video class="p39"src="bau/img/2025pic/20251013_ysn_mov_2-copy.mp4" muted loop playsinline></video>
+
+<img class="p38" src="bau/img/2025pic/P1037139z.webp">
+<img class="p37" src="bau/img/2025pic/P1037111z.webp">
+<img class="p35" src="bau/img/2025pic/P1037195.webp">
+<img class="p34" src="bau/img/2025pic/P1037094z.webp">
+<img class="p33" src="bau/img/2025pic/P1037091.webp">
+<img class="p32" src="bau/img/2025pic/P1037087.webp">
+<img class="p31" src="bau/img/2025pic/P1037082.webp"> 
+<img class="p30" src="bau/img/2025pic/P1037073.webp">
+<img class="p29" src="bau/img/2025pic/P1037063.webp">
+<img class="p28" src="bau/img/2025pic/P1037001z_cutout.png">
+<video class="p27"src="bau/img/2025pic/20251013_ysn_mov_3.mp4"muted loop playsinline></video>
+<img class="p26" src="bau/img/2025pic/P1037057.webp">
+<img class="p25" src="bau/img/2025pic/ysn_handout.webp">
+<img class="p24" src="bau/img/2025pic/add/250908-7-talk.webp"> 
+<img class="p23" src="bau/img/2025pic/add/250908-10_cropped.webp"> 
+<img class="p22" src="bau/img/2025pic/add/250908-8.webp">
+<img class="p21" src="bau/img/2025pic/add/250908-15.webp"> 
+ <img class="p20" src="bau/img/2025pic/add/250908-14.webp"> 
+<img class="p19"src="bau/img/2025pic/add/250908-20.webp">
+<img class="p18" src="bau/img/2025pic/add/250908-24.webp" >
+ <img class="p17" src="bau/img/2025pic/add/250908-26.webp" >
+ <img class="p16"src="bau/img/2025pic/add/250908-35.webp">
+<img class="p15"src="bau/img/2025pic/add/250908-31.webp">
+<img class="p14"src="bau/img/2025pic/add/250908-27.webp">
+<img class="p13"src="bau/img/2025pic/add/250908-33-workshop.webp">  
+<img class="p12" src="bau/img/2025pic/P1037041.webp"> 
+<img class="p11" src="bau/img/2025pic/P1036975_test.png"> 
+<img class="p10" src="bau/img/2025pic/P1036939.webp">
+<img class="p9" src="bau/img/2025pic/P1036878z.webp"> 
+<img class="p7" src="bau/img/2025pic/P1036844.webp"> 
+<video class="p8"src="bau/img/2025pic/export_test_trimmed.mp4"muted loop playsinline></video>
+<img class="p6" src="bau/img/2025pic/P1036826z_crop.webp" >
+<img class="p5" src="bau/img/2025pic/1_P1037006.webp" >
+<img class="p4"src="bau/img/2025pic/P1036932.webp">
+<img class="p3"src="bau/img/2025pic/P1036900z.webp">
+<img class="p2"src="bau/img/2025pic/P1036929z.webp">
+<img class="p1"src="bau/img/2025pic/P1037103.webp"> 
+<img class="p0 mobile-only" src="bau/img/2025pic/taptap.svg">   -->
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+<!-- footer -->
+<div class="footer">
+
+        <div class="footer-left">
+        <div class="footer_container">
+        <div class="footer_ysn">YASHIRONI since 1720</div>
+        <div class="footer_clock"><div id="clock"></div><div id="timezone"></div>&ensp;<div id="date"></div>
+        </div>
+        <div class="footer_ysn"><p id="result"></p></div>
+        </div>
+        
+        <div class="footer-right">
+        
+        </div> 
+        </div>
+        
+        <div class="marquee-container"> 
+            <div class="marquee">  
+                <span>本サイトは、創業1720年の着物メーカー問屋「矢代仁」が、350周年に向けてスタートしたプロジェクトYSNの記録です。This website is a record of the project YSN, launched by kimono manufacturer and wholesaler YASHIRONI, which marked its 30th anniversary in 2020, to chart the path to 350 years in business.</span> 
+                <span>本サイトは、創業1720年の着物メーカー問屋「矢代仁」が、350周年に向けてスタートしたプロジェクトYSNの記録です。This website is a record of the project YSN, launched by kimono manufacturer and wholesaler YASHIRONI, which marked its 30th anniversary in 2020, to chart the path to 350 years in business.</span> 
+            </div> 
+        </div>
+        
+
+        
+
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/luxon@2.1.1/build/global/luxon.min.js"></script>
+        <script src="scripts.js"></script>
+
+
+<script>
+
+    </script>
+        </body>
+        </html>
