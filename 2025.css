@@ -259,9 +259,12 @@ bottom
   top: 75%;
   transform: translate(-50%, -50%);
   width: 90%;
-  height: auto;
+  max-height: 100%;
   font-size: 12px;
   z-index: 0;
+
+      overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 }
 
