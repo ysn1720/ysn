@@ -768,6 +768,8 @@ media.forEach(el => {
 // wheel scroll
 document.addEventListener('wheel', e => {
 
+
+
     const visible =
         media.filter(el =>
             !el.classList.contains('hide')
@@ -832,30 +834,21 @@ document.addEventListener('wheel', e => {
 
 }, { passive: false });
 
-
-// ---------------------------------------------------------------
-// touch scroll (stack) — iPhoneのテキスト選択を妨げない
-// ---------------------------------------------------------------
-
-// touchstart 時にテキスト要素（p タグ）へのタッチかどうかを記録する
-let isTouchOnText = false;
 let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
-
     touchStartY = e.touches[0].clientY;
-
-    // タッチ開始点が <p> 要素またはその子孫であれば
-    // テキスト選択モードとみなし、スタックスクロールを無効化する
-    const target = e.target;
-    isTouchOnText = !!(target.closest('p'));
-
-}, { passive: true });
+});
 
 document.addEventListener('touchmove', e => {
 
-    // テキスト上のタッチは iOS のネイティブ選択に任せる
-    if (isTouchOnText) return;
+if (
+    window.innerWidth <= 500 &&
+    e.target.closest('.p47')
+) {
+    return;
+}
+
 
     const visible = media.filter(el => !el.classList.contains('hide'));
 
