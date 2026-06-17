@@ -736,7 +736,7 @@ const stack =
     document.getElementById('stack');
 
 const media =
-    [...stack.querySelectorAll('img, video, a, p')];
+    [...stack.querySelectorAll('img, video, a')];
 
 let restoring = false;
 
@@ -768,8 +768,10 @@ media.forEach(el => {
 // wheel scroll
 document.addEventListener('wheel', e => {
 
-
-
+if (e.target.closest('.p47')) {
+    e.target.closest('.p47').scrollTop += e.deltaY;
+    return;
+}
     const visible =
         media.filter(el =>
             !el.classList.contains('hide')
@@ -868,18 +870,37 @@ if (
     top.style.transform = `${base} translateY(${y}px)`;
     scrollY.set(top, y);
 
+// 変更後
     updateRotation(stack);
 
-    e.preventDefault();
+    if (!e.target.closest('.p47')) {
+        e.preventDefault();
+    }
 
 }, { passive: false });
+
+
+
 
 
 // ---------------------------------------------------------------
 // stack click only
 // ---------------------------------------------------------------
 
+let mouseDownX = 0;
+let mouseDownY = 0;
+
+document.addEventListener('mousedown', (e) => {
+    mouseDownX = e.clientX;
+    mouseDownY = e.clientY;
+});
+
 document.addEventListener('click', (e) => {
+
+    // ドラッグ判定
+    const dx = Math.abs(e.clientX - mouseDownX);
+    const dy = Math.abs(e.clientY - mouseDownY);
+    if (dx > 5 || dy > 5) return;
 
     // darkmode button
     if (e.target.closest('#icon-mode')) return;
@@ -894,8 +915,9 @@ document.addEventListener('click', (e) => {
     // modal
     if (e.target.closest('#modal')) return;
 
+// 変更後
     // stack only
-    if (!e.target.closest('#stack')) return;
+    if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
 
     const visible =
         media.filter(el =>
