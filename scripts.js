@@ -904,7 +904,7 @@ document.addEventListener('click', (e) => {
 
 if (!restoring) {
 
-    if (visible.length === 1) {
+    if (visible.length === 0) {
         restoring = true;
         // fall through to restore below
     } else {
