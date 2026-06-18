@@ -397,13 +397,18 @@ let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
     touchStartY = e.touches[0].clientY;
-    // タッチ開始時に選択をクリア（選択バー操作中は除く）
+    // タッチ開始時に選択をクリア（選択バー操作中は除く）v
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 });
 
 document.addEventListener('touchmove', e => {
 
+
+        // テキスト選択中はスキップ
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
+    
     // p47エリアを座標で判定してスクロール転送
     const p47el = document.querySelector('.p47');
     if (p47el && !p47el.classList.contains('hide')) {
