@@ -6,10 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const body = document.body;
     const iconContainer = document.getElementById("icon-mode");
-    const icon = iconContainer
-        ? iconContainer.querySelector("img")
-        : null;
-
+    const icon = iconContainer ? iconContainer.querySelector("img") : null;
     const isTopPage = body.classList.contains("top");
 
     if (!iconContainer || !icon) {
@@ -18,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const savedTheme = localStorage.getItem("theme");
-
     if (savedTheme === "dark") {
         body.classList.add("mode_A");
     } else {
@@ -55,8 +51,7 @@ function updateTime() {
     var clockElement = document.getElementById('clock');
     var dateElement = document.getElementById('date');
     var timezoneElement = document.getElementById('timezone');
-    var timeString = formatTime(now.hour) + ':' + formatTime(now.minute) + ':' + formatTime(now.second);
-    clockElement.textContent = timeString;
+    clockElement.textContent = formatTime(now.hour) + ':' + formatTime(now.minute) + ':' + formatTime(now.second);
     dateElement.textContent = now.toFormat('LLLL dd yyyy');
     timezoneElement.textContent = "(" + getTimeZoneAbbreviation(now.zoneName) + ")";
 }
@@ -107,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const initialRotationMap = { logoA: 0, logoB: 90, logoC: 0 };
     const maxRotationMap = { logoA: 30, logoB: 260, logoC: 280 };
     const stack = document.getElementById('stack');
-    const media = window.media || (stack ? [...stack.querySelectorAll('img, video, a, p')] : []);
+    const media = window.media || (stack ? [...stack.querySelectorAll('img, video, a')] : []);
 
     logoElements.forEach(logoElement => {
         const logoClass = Array.from(logoElement.classList).find(cls => cls in initialRotationMap);
@@ -166,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", function () {
     const gallery = document.querySelector(".gallery-container");
     const rightside = document.querySelector(".rightside");
+    if (!gallery || !rightside) return;
     rightside.addEventListener("click", function (event) {
         const clickX = event.clientX - rightside.getBoundingClientRect().left;
         if (clickX < gallery.clientWidth / 2) {
@@ -186,23 +182,25 @@ const modal = document.getElementById("modal");
 const modalImage = document.getElementById("modal-image");
 const modalCaption = document.getElementById("modal-caption");
 
-document.querySelectorAll(".gallery-container .gallery-item").forEach((item) => {
-    item.addEventListener("click", (e) => {
-        e.stopPropagation();
-        modal.classList.add("open");
-        modalImage.src = item.src;
-        modalCaption.textContent = item.getAttribute("data-caption") || "";
+if (modal) {
+    document.querySelectorAll(".gallery-container .gallery-item").forEach((item) => {
+        item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            modal.classList.add("open");
+            modalImage.src = item.src;
+            modalCaption.textContent = item.getAttribute("data-caption") || "";
+        });
     });
-});
 
-document.querySelectorAll(".thumbs-container .picsinthumbs").forEach((item) => {
-    item.addEventListener("click", (e) => {
-        e.stopPropagation();
-        modal.classList.add("open");
-        modalImage.src = item.src;
-        modalCaption.textContent = item.getAttribute("data-caption") || "";
+    document.querySelectorAll(".thumbs-container .picsinthumbs").forEach((item) => {
+        item.addEventListener("click", (e) => {
+            e.stopPropagation();
+            modal.classList.add("open");
+            modalImage.src = item.src;
+            modalCaption.textContent = item.getAttribute("data-caption") || "";
+        });
     });
-});
+}
 
 
 
@@ -213,6 +211,8 @@ document.querySelectorAll(".thumbs-container .picsinthumbs").forEach((item) => {
 document.addEventListener("DOMContentLoaded", function () {
 
     const modal = document.getElementById("modal");
+    if (!modal) return;
+
     const modalImg = document.getElementById("modal-image");
     const modalCaption = document.getElementById("modal-caption");
     const closeModal = document.getElementById("close-btn");
@@ -238,12 +238,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     [
-        ["#gallery1 .gallery-item"],
-        ["#gallery2 .picsinthumbs"],
-        ["#gallery3 .picsinthumbs_3"],
-        ["#gallery4 .picsinthumbs_4"],
-        ["#gallery5 .picsinthumbs_5"],
-    ].forEach(([selector]) => {
+        "#gallery1 .gallery-item",
+        "#gallery2 .picsinthumbs",
+        "#gallery3 .picsinthumbs_3",
+        "#gallery4 .picsinthumbs_4",
+        "#gallery5 .picsinthumbs_5",
+    ].forEach((selector) => {
         const items = document.querySelectorAll(selector);
         items.forEach((item, index) => {
             item.addEventListener("click", function (e) {
@@ -297,19 +297,20 @@ document.addEventListener("DOMContentLoaded", function () {
 // ---------------------------------------------------------------
 
 window.addEventListener('load', function () {
-    var modal = document.getElementById("myModal");
+    var alertModal = document.getElementById("myModal");
+    if (!alertModal) return;
     var closeBtn = document.getElementsByClassName("close")[0];
     var modalContent = document.querySelector(".modal-content");
-    modal.style.display = "block";
-    closeBtn.onclick = function () { modal.style.display = "none"; };
+    alertModal.style.display = "block";
+    closeBtn.onclick = function () { alertModal.style.display = "none"; };
     window.addEventListener('click', function (event) {
-        if (event.target == modal || event.target == modalContent) {
-            modal.style.display = "none";
+        if (event.target == alertModal || event.target == modalContent) {
+            alertModal.style.display = "none";
         }
     });
     window.addEventListener('touchstart', function (event) {
-        if (event.target == modal || event.target == modalContent) {
-            modal.style.display = "none";
+        if (event.target == alertModal || event.target == modalContent) {
+            alertModal.style.display = "none";
         }
     });
 });
@@ -334,6 +335,24 @@ media.forEach(el => {
     if (el.tagName === 'VIDEO') el.play();
 });
 
+// p47表示状態を更新する関数
+function updateP47Visibility() {
+    if (window.innerWidth > 500) return;  // モバイルのみ
+    const p47 = document.querySelector('.p47');
+    if (!p47) return;
+    const allHidden = media.every(el => el.classList.contains('hide'));
+    if (allHidden) {
+        p47.classList.remove('hide');
+    } else {
+        p47.classList.add('hide');
+    }
+}
+
+// モバイルの初期状態：画像があるのでp47を隠す
+if (window.innerWidth <= 500) {
+    document.querySelector('.p47')?.classList.add('hide');
+}
+
 
 
 // ---------------------------------------------------------------
@@ -342,10 +361,15 @@ media.forEach(el => {
 
 document.addEventListener('wheel', e => {
 
-    // p47エリアではスクロールをテキストに転送
-    if (e.target.closest('.p47') || e.target.closest('.p47-scroll-catcher')) {
-        document.querySelector('.p47').scrollTop += e.deltaY;
-        return;
+    // p47エリアではテキストにスクロール転送
+    const p47el = document.querySelector('.p47');
+    if (p47el) {
+        const rect = p47el.getBoundingClientRect();
+        if (e.clientX >= rect.left && e.clientX <= rect.right &&
+            e.clientY >= rect.top  && e.clientY <= rect.bottom) {
+            p47el.scrollTop += e.deltaY;
+            return;
+        }
     }
 
     const visible = media.filter(el => !el.classList.contains('hide'));
@@ -373,20 +397,23 @@ let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
     touchStartY = e.touches[0].clientY;
+    // タッチ開始時に選択をクリア（選択バー操作中は除く）
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
 });
 
 document.addEventListener('touchmove', e => {
 
     // p47エリアを座標で判定してスクロール転送
-    const p47 = document.querySelector('.p47');
-    if (p47) {
-        const rect = p47.getBoundingClientRect();
+    const p47el = document.querySelector('.p47');
+    if (p47el && !p47el.classList.contains('hide')) {
+        const rect = p47el.getBoundingClientRect();
         const tx = e.touches[0].clientX;
         const ty = e.touches[0].clientY;
         if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
             const deltaY = touchStartY - e.touches[0].clientY;
             touchStartY = e.touches[0].clientY;
-            p47.scrollTop += deltaY;
+            p47el.scrollTop += deltaY;
             e.preventDefault();
             return;
         }
@@ -426,6 +453,10 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('click', (e) => {
 
+    // テキスト選択中はスキップ
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) return;
+
     // ドラッグ判定
     const dx = Math.abs(e.clientX - mouseDownX);
     const dy = Math.abs(e.clientY - mouseDownY);
@@ -434,7 +465,7 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
     if (e.target.closest('#modal')) return;
-    if (!e.target.closest('#stack') && !e.target.closest('.p47') && !e.target.closest('.p47-scroll-catcher')) return;
+    if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
 
     const visible = media.filter(el => !el.classList.contains('hide'));
 
@@ -447,10 +478,6 @@ document.addEventListener('click', (e) => {
             top.classList.add('hide');
         }
     }
-
-    if (media.every(el => el.classList.contains('hide'))) {
-    document.querySelector('.p47')?.classList.remove('hide');
-}
 
     if (restoring) {
         const hidden = media.filter(el => el.classList.contains('hide'));
@@ -466,30 +493,11 @@ document.addEventListener('click', (e) => {
         }
     }
 
-    // ← ここに追加：クリックのたびにp47の表示を更新
-     if (window.innerWidth <= 500) {
-    const allHidden = media.every(el => el.classList.contains('hide'));
-    const p47 = document.querySelector('.p47');
-    if (allHidden) {
-        p47?.classList.remove('hide');
-    } else {
-        p47?.classList.add('hide');
-    }
-  }
-
+    // モバイルのみp47表示制御
+    updateP47Visibility();
 
 });
 
-const p47 = document.querySelector('.p47');
-
-const allHidden = media.every(el => el.classList.contains('hide'));
-
-// 状態に応じて強制制御
-if (allHidden) {
-    p47?.classList.remove('hide');
-} else {
-    p47?.classList.add('hide');
-}
 
 
 // ---------------------------------------------------------------
