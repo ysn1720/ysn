@@ -27,7 +27,7 @@
 }
 
 .hide { opacity: 0;  
-    pointer-events: none; }
+ }
 
 
 .txtcontents{
@@ -41,13 +41,14 @@
 }
 
 .p47{
+  opacity: 1 !important;
     position: fixed;        /* ← absoluteからfixedに */
     left: 50%;
     top: 66px;
     transform: translateX(-50%);
     width: 100%;
     height: calc(100vh - 66px);   
-    overflow-y: auto !important;
+    overflow-y: scroll !important;
     text-align: center;
     z-index: 0;
 
@@ -55,7 +56,11 @@
     -ms-overflow-style: none;     /* IE */
 }
 
-
+@media (max-width: 500px) {
+    .p47.hide {
+        opacity: 0 !important;
+    }
+}
 
 .p47::-webkit-scrollbar {
     display: none;                /* Chrome / Safari */
@@ -275,6 +280,7 @@ bottom
         font-size: 12px;
         z-index: 0;
         pointer-events: all;  
+  
     
 
 }
