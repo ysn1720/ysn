@@ -363,14 +363,17 @@ document.addEventListener('wheel', e => {
 
     // p47エリアではテキストにスクロール転送
     const p47el = document.querySelector('.p47');
-    if (p47el) {
-        const rect = p47el.getBoundingClientRect();
-        if (e.clientX >= rect.left && e.clientX <= rect.right &&
-            e.clientY >= rect.top  && e.clientY <= rect.bottom) {
-            p47el.scrollTop += e.deltaY;
-            return;
-        }
+
+    if (p47el && !p47el.classList.contains('hide')) {
+    const rect = p47el.getBoundingClientRect();
+    const tx = e.touches[0].clientX;
+    const ty = e.touches[0].clientY;
+
+    if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
+        // 👉 何もしない（ブラウザにスクロールを渡す）
+        return;
     }
+}
 
     const visible = media.filter(el => !el.classList.contains('hide'));
     if (!visible.length) return;
@@ -383,7 +386,7 @@ document.addEventListener('wheel', e => {
     top.style.transform = `${base} translateY(${y}px)`;
     scrollY.set(top, y);
     updateRotation(stack);
-    e.preventDefault();
+   
 
 }, { passive: false });
 
@@ -408,7 +411,7 @@ document.addEventListener('touchmove', e => {
         // テキスト選択中はスキップ
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
-    
+
     // p47エリアを座標で判定してスクロール転送
     const p47el = document.querySelector('.p47');
     if (p47el && !p47el.classList.contains('hide')) {
