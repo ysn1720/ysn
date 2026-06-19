@@ -411,10 +411,11 @@ document.addEventListener('wheel', e => {
 let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
-    touchStartY = e.touches[0].clientY;
-    // タッチ開始時に選択をクリア（選択バー操作中は除く）v
+    // 選択中はtouchStartYを更新しない
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
+
+    touchStartY = e.touches[0].clientY;
 });
 
 document.addEventListener('touchmove', e => {
