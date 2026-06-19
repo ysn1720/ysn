@@ -149,6 +149,23 @@ document.addEventListener('DOMContentLoaded', function () {
         el.addEventListener('scroll', () => { updateRotation(el); });
     });
 
+
+    const p47el = document.querySelector('.p47');
+    if (p47el) {
+        p47el.addEventListener('scroll', () => {
+            const scrollPosition = p47el.scrollTop;
+            const maxScroll = p47el.scrollHeight - p47el.clientHeight;
+            logoElements.forEach(logo => {
+                const logoClass = Array.from(logo.classList).find(cls => cls in maxRotationMap);
+                if (!logoClass) return;
+                const base = initialRotationMap[logoClass];
+                const max = maxRotationMap[logoClass];
+                const progress = maxScroll > 0 ? scrollPosition / maxScroll : 0;
+                logo.style.transform = `rotate(${base + progress * max}deg)`;
+            });
+        });
+    }
+
     window.updateRotation = updateRotation;
 });
 
