@@ -444,6 +444,8 @@ document.addEventListener('touchmove', e => {
         const ty = e.touches[0].clientY;
         if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
             const deltaY = touchStartY - e.touches[0].clientY;
+        if (Math.abs(deltaY) < 3) return; // ← 微妙な動きは無視
+
             touchStartY = e.touches[0].clientY;
             p47el.scrollTop += deltaY;
             return;
