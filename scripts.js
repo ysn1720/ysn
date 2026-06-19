@@ -409,6 +409,7 @@ document.addEventListener('wheel', e => {
 // ---------------------------------------------------------------
 
 let touchStartY = 0;
+let isTouchOnText = false; // ← 追加
 
 document.addEventListener('touchstart', e => {
     // 選択中はtouchStartYを更新しない
@@ -416,6 +417,16 @@ document.addEventListener('touchstart', e => {
     if (selection && selection.toString().length > 0) return;
 
     touchStartY = e.touches[0].clientY;
+    // p47エリアを触ったかどうかを記録しておく ← 追加
+    const p47el = document.querySelector('.p47');
+    if (p47el && !p47el.classList.contains('hide')) {
+        const rect = p47el.getBoundingClientRect();
+        const tx = e.touches[0].clientX;
+        const ty = e.touches[0].clientY;
+        isTouchOnText = (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom);
+    } else {
+        isTouchOnText = false;
+    }
 });
 
 document.addEventListener('touchmove', e => {
