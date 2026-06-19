@@ -47,10 +47,11 @@
     top: 66px;
     transform: translateX(-50%);
     width: 100%;
-    height: calc(100vh - 66px);   
+    height: calc(100vh - 66px - 68px);   
     overflow-y: scroll !important;
     text-align: center;
     z-index: 0;
+    padding-bottom:600px;
 
         scrollbar-width: none;        /* Firefox */
     -ms-overflow-style: none;     /* IE */
@@ -273,7 +274,7 @@ bottom
          top:73px;
        transform: translateX(-50%);
         width: 90%;
-          height: calc(100vh - 154px);   
+          height: calc(100vh - 168px);   
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
         font-size: 12px;
