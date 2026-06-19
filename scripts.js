@@ -360,7 +360,7 @@ if (window.innerWidth <= 500) {
 // ---------------------------------------------------------------
 
 document.addEventListener('wheel', e => {
-
+   if (window.innerWidth <= 500) return; // ← この1行を追加
     // p47エリアではテキストにスクロール転送
     const p47el = document.querySelector('.p47');
 
@@ -426,6 +426,7 @@ document.addEventListener('touchmove', e => {
             return;
         }
     }
+    if (window.innerWidth <= 500) return; // ← この1行を追加（p47判定の後に置く）
 
     const visible = media.filter(el => !el.classList.contains('hide'));
     if (!visible.length) return;
@@ -461,6 +462,7 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('click', (e) => {
 
+    
     // テキスト選択中はスキップ
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
