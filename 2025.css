@@ -27,6 +27,8 @@
 }
 
 .hide { opacity: 0;  
+           pointer-events: none; /* ← 追加：透明な画像がタッチを奪わないようにする */
+
  }
 
 
