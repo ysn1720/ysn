@@ -435,7 +435,6 @@ document.addEventListener('touchmove', e => {
             const deltaY = touchStartY - e.touches[0].clientY;
             touchStartY = e.touches[0].clientY;
             p47el.scrollTop += deltaY;
-            e.preventDefault();
             return;
         }
     }
