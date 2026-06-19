@@ -360,25 +360,22 @@ if (window.innerWidth <= 500) {
 // ---------------------------------------------------------------
 
 document.addEventListener('wheel', e => {
-   if (window.innerWidth <= 500) return; // ← この1行を追加
-    // p47エリアではテキストにスクロール転送
-    const p47el = document.querySelector('.p47');
 
-    if (p47el && !p47el.classList.contains('hide')) {
-    const rect = p47el.getBoundingClientRect();
-    const tx = e.touches[0].clientX;
-    const ty = e.touches[0].clientY;
-
-    if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
-        // 👉 何もしない（ブラウザにスクロールを渡す）
-        return;
-    }
-}
+    // モバイルでは何もしない
+    if (window.innerWidth <= 500) return;
 
     const visible = media.filter(el => !el.classList.contains('hide'));
-    if (!visible.length) return;
-    if (window.innerWidth <= 500 && visible.length > 1) return;
 
+    // 画像がすべて消えているとき → p47のテキストをスクロール
+    if (visible.length === 0) {
+        const p47el = document.querySelector('.p47');
+        if (p47el) {
+            p47el.scrollTop += e.deltaY;
+        }
+        return;
+    }
+
+    // 画像がある → 一番上の画像だけスクロール（p47は動かさない）
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
     let y = scrollY.get(top) || 0;
@@ -386,10 +383,8 @@ document.addEventListener('wheel', e => {
     top.style.transform = `${base} translateY(${y}px)`;
     scrollY.set(top, y);
     updateRotation(stack);
-   
 
 }, { passive: false });
-
 
 
 // ---------------------------------------------------------------
