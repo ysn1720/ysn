@@ -27,7 +27,7 @@
 }
 
 .hide { opacity: 0;  
-           pointer-events: none; /* ← 追加：透明な画像がタッチを奪わないようにする */
+      pointer-events: none; /* ← 追加済みならそのまま */
 
  }
 
@@ -55,8 +55,14 @@
     z-index: 0;
     padding-bottom:600px;
 
+
         scrollbar-width: none;        /* Firefox */
     -ms-overflow-style: none;     /* IE */
+
+      /* 既存のスタイルはそのまま */
+  pointer-events: auto;
+  user-select: text; /* ← 追加 */
+  -webkit-user-select: text; /* ← 追加 */
 }
 
 @media (max-width: 500px) {
@@ -144,7 +150,6 @@ bottom
 .p45 { right: 140px; bottom: -20px; z-index: 1; }
 .p46 { left: 0px; top: 0px; z-index: 1; width: 680px;}
 
-.hide { opacity: 0; }
 
 
 
