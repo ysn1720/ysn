@@ -409,7 +409,6 @@ document.addEventListener('wheel', e => {
 // ---------------------------------------------------------------
 
 let touchStartY = 0;
-let isTouchOnText = false; // ← 追加
 
 document.addEventListener('touchstart', e => {
     // 選択中はtouchStartYを更新しない
@@ -417,42 +416,18 @@ document.addEventListener('touchstart', e => {
     if (selection && selection.toString().length > 0) return;
 
     touchStartY = e.touches[0].clientY;
-    // p47エリアを触ったかどうかを記録しておく ← 追加
-    const p47el = document.querySelector('.p47');
-    if (p47el && !p47el.classList.contains('hide')) {
-        const rect = p47el.getBoundingClientRect();
-        const tx = e.touches[0].clientX;
-        const ty = e.touches[0].clientY;
-        isTouchOnText = (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom);
-    } else {
-        isTouchOnText = false;
-    }
 });
 
 document.addEventListener('touchmove', e => {
 
-
-        // テキスト選択中はスキップ
+    // テキスト選択中はすべてスキップ
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 
-    // p47エリアを座標で判定してスクロール転送
-    const p47el = document.querySelector('.p47');
-    if (p47el && !p47el.classList.contains('hide')) {
-        const rect = p47el.getBoundingClientRect();
-        const tx = e.touches[0].clientX;
-        const ty = e.touches[0].clientY;
-        if (tx >= rect.left && tx <= rect.right && ty >= rect.top && ty <= rect.bottom) {
-            const deltaY = touchStartY - e.touches[0].clientY;
-        if (Math.abs(deltaY) < 3) return; // ← 微妙な動きは無視
+    // モバイルでは画像を動かさない（p47のスクロールはCSSのtouch-actionに任せる）
+    if (window.innerWidth <= 500) return;
 
-            touchStartY = e.touches[0].clientY;
-            p47el.scrollTop += deltaY;
-            return;
-        }
-    }
-    if (window.innerWidth <= 500) return; // ← この1行を追加（p47判定の後に置く）
-
+    // デスクトップのみ以下を実行
     const visible = media.filter(el => !el.classList.contains('hide'));
     if (!visible.length) return;
     if (visible.length > 1) return;
@@ -460,7 +435,6 @@ document.addEventListener('touchmove', e => {
     const top = visible[visible.length - 1];
     const deltaY = touchStartY - e.touches[0].clientY;
     touchStartY = e.touches[0].clientY;
-
     const base = baseTransform.get(top);
     let y = scrollY.get(top) || 0;
     y -= deltaY;
@@ -470,7 +444,6 @@ document.addEventListener('touchmove', e => {
     e.preventDefault();
 
 }, { passive: false });
-
 
 
 // ---------------------------------------------------------------
