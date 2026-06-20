@@ -291,6 +291,7 @@ bottom
             touch-action: pan-y;
                 user-select: text;           /* ← 追加 */
     -webkit-user-select: text;   /* ← 追加 */
+      -webkit-touch-callout: text; 
 
 }
 }
