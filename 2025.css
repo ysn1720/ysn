@@ -277,22 +277,13 @@ bottom
 
 
 .p47 {
-        position: absolute;
-        left: 50%;
-         top:73px;
-       transform: translateX(-50%);
-        width: 90%;
-          height: calc(100vh - 168px);   
-        overflow-y: scroll;
-        -webkit-overflow-scrolling: touch;
-        font-size: 12px;
-        z-index: 50;
-        pointer-events: all;  
-       touch-action: auto;  /* ← pan-y から auto に変更 */
-
-                user-select: text;           /* ← 追加 */
-    -webkit-user-select: text;   /* ← 追加 */
-      -webkit-touch-callout: text; 
+        position: fixed;
+        top: 100px;
+        left: 10px;
+        z-index: 9999;
+        background: red;
+        color: white;
+        font-size: 20px;
 
 }
 }
