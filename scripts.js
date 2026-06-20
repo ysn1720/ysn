@@ -408,42 +408,42 @@ document.addEventListener('wheel', e => {
 // touch scroll
 // ---------------------------------------------------------------
 
-let touchStartY = 0;
+// let touchStartY = 0;
 
-document.addEventListener('touchstart', e => {
-    // 選択中はtouchStartYを更新しない
-    const selection = window.getSelection();
-    if (selection && selection.toString().length > 0) return;
+// document.addEventListener('touchstart', e => {
+//     // 選択中はtouchStartYを更新しない
+//     const selection = window.getSelection();
+//     if (selection && selection.toString().length > 0) return;
 
-    touchStartY = e.touches[0].clientY;
-});
+//     touchStartY = e.touches[0].clientY;
+// });
 
-document.addEventListener('touchmove', e => {
+// document.addEventListener('touchmove', e => {
 
-    // テキスト選択中はすべてスキップ
-    const selection = window.getSelection();
-    if (selection && selection.toString().length > 0) return;
+//     // テキスト選択中はすべてスキップ
+//     const selection = window.getSelection();
+//     if (selection && selection.toString().length > 0) return;
 
-    // モバイルでは画像を動かさない（p47のスクロールはCSSのtouch-actionに任せる）
-    if (window.innerWidth <= 500) return;
+//     // モバイルでは画像を動かさない（p47のスクロールはCSSのtouch-actionに任せる）
+//     if (window.innerWidth <= 500) return;
 
-    // デスクトップのみ以下を実行
-    const visible = media.filter(el => !el.classList.contains('hide'));
-    if (!visible.length) return;
-    if (visible.length > 1) return;
+//     // デスクトップのみ以下を実行
+//     const visible = media.filter(el => !el.classList.contains('hide'));
+//     if (!visible.length) return;
+//     if (visible.length > 1) return;
 
-    const top = visible[visible.length - 1];
-    const deltaY = touchStartY - e.touches[0].clientY;
-    touchStartY = e.touches[0].clientY;
-    const base = baseTransform.get(top);
-    let y = scrollY.get(top) || 0;
-    y -= deltaY;
-    top.style.transform = `${base} translateY(${y}px)`;
-    scrollY.set(top, y);
-    updateRotation(stack);
-    e.preventDefault();
+//     const top = visible[visible.length - 1];
+//     const deltaY = touchStartY - e.touches[0].clientY;
+//     touchStartY = e.touches[0].clientY;
+//     const base = baseTransform.get(top);
+//     let y = scrollY.get(top) || 0;
+//     y -= deltaY;
+//     top.style.transform = `${base} translateY(${y}px)`;
+//     scrollY.set(top, y);
+//     updateRotation(stack);
+//     e.preventDefault();
 
-}, { passive: false });
+// }, { passive: false });
 
 
 // ---------------------------------------------------------------
