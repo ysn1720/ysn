@@ -205,11 +205,12 @@
   .p45 { transform: translate(-80%, -80%); }
   .p46 { transform: translate(-50%, -50%); }
 
-  .p47 {
+
+.p47 {
     position: fixed !important;
-    left: 0 !important;
+    left: 50% !important;
     top: 73px !important;
-    transform: none !important;
+    transform: translateX(-50%) !important;
     width: 90% !important;
     height: calc(100vh - 168px) !important;
     overflow-y: scroll;
@@ -223,6 +224,7 @@
     -webkit-touch-callout: default;
     text-align: center;
     padding-bottom: 200px;
+}
   }
 
   .p47.hide {
