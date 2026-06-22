@@ -334,6 +334,7 @@ window.addEventListener('load', function () {
 });
 
 // ---------------------------------------------------------------
+// ---------------------------------------------------------------
 // 2025 stack
 // ---------------------------------------------------------------
 
@@ -351,9 +352,8 @@ media.forEach(el => {
     if (el.tagName === 'VIDEO') el.play();
 });
 
-// p47表示状態を更新する関数（モバイルのみ）
+// p47表示状態を更新する関数
 function updateP47Visibility() {
-    if (window.innerWidth > 500) return;
     const p47 = document.querySelector('.p47');
     if (!p47) return;
     const allHidden = media.every(el => el.classList.contains('hide'));
@@ -361,24 +361,20 @@ function updateP47Visibility() {
         p47.classList.remove('hide');
         p47.style.pointerEvents = 'auto';
     } else {
-        p47.classList.add('hide');
+        if (window.innerWidth <= 500) {
+            p47.classList.add('hide');
+        }
         p47.style.pointerEvents = 'none';
     }
 }
 
-// モバイルのみp47を初期非表示
-if (window.innerWidth <= 500) {
-    const p47init = document.querySelector('.p47');
-    if (p47init) {
+// 初期状態
+const p47init = document.querySelector('.p47');
+if (p47init) {
+    if (window.innerWidth <= 500) {
         p47init.classList.add('hide');
-        p47init.style.pointerEvents = 'none';
     }
-}
-
-// デスクトップはp47のpointer-eventsを最初はnoneに
-if (window.innerWidth > 500) {
-    const p47init = document.querySelector('.p47');
-    if (p47init) p47init.style.pointerEvents = 'none';
+    p47init.style.pointerEvents = 'none';
 }
 
 
@@ -396,12 +392,9 @@ document.addEventListener('wheel', e => {
     if (visible.length === 0) {
         if (p47el) {
             p47el.scrollTop += e.deltaY;
-            p47el.style.pointerEvents = 'auto';
         }
         return;
     }
-
-    if (p47el) p47el.style.pointerEvents = 'none';
 
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
@@ -465,15 +458,6 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('click', (e) => {
 
-    // デスクトップで画像がある間はp47のpointer-eventsを必ずnoneに
-    if (window.innerWidth > 500) {
-        const p47el = document.querySelector('.p47');
-        const visible = media.filter(el => !el.classList.contains('hide'));
-        if (p47el && visible.length > 0) {
-            p47el.style.pointerEvents = 'none';
-        }
-    }
-
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 
@@ -481,14 +465,12 @@ document.addEventListener('click', (e) => {
     const dy = Math.abs(e.clientY - mouseDownY);
     if (dx > 5 || dy > 5) return;
 
-    // 除外するエリア
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
     if (e.target.closest('#modal')) return;
     if (e.target.closest('.footer')) return;
     if (e.target.closest('.header')) return;
 
-    // それ以外はすべてクリックを受け取る
     const visible = media.filter(el => !el.classList.contains('hide'));
 
     if (!restoring) {
@@ -542,9 +524,8 @@ media.forEach(el => {
     if (el.classList.contains('mobile-only')) {
         if (window.innerWidth > 500) {
             el.classList.add('hide');
-            el.style.display = 'none'; // デスクトップでは完全非表示
+            el.style.display = 'none';
         }
     }
     if (el.tagName === 'VIDEO') el.play();
 });
-
