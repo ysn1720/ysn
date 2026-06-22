@@ -474,7 +474,8 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
     if (e.target.closest('#modal')) return;
-   if (!e.target.closest('#stack')) return;
+ if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
+
 
     const visible = media.filter(el => !el.classList.contains('hide'));
 
