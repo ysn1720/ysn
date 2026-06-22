@@ -334,13 +334,12 @@ window.addEventListener('load', function () {
 });
 
 
-
 // ---------------------------------------------------------------
 // 2025 stack
 // ---------------------------------------------------------------
 
 const stack = document.getElementById('stack');
-const media = [...stack.querySelectorAll('img, video, a')];  // p47を除外
+const media = [...stack.querySelectorAll('img, video, a')];
 
 let restoring = false;
 const baseTransform = new Map();
@@ -355,26 +354,25 @@ media.forEach(el => {
 
 // p47表示状態を更新する関数
 function updateP47Visibility() {
-    
     const p47 = document.querySelector('.p47');
     if (!p47) return;
     const allHidden = media.every(el => el.classList.contains('hide'));
     if (allHidden) {
         p47.classList.remove('hide');
-                p47.style.pointerEvents = 'auto'; // ← 追加
+        p47.style.pointerEvents = 'auto';
     } else {
         p47.classList.add('hide');
-                p47.style.pointerEvents = 'none'; // ← 追加
-
-    }
-// モバイルの初期状態：画像があるのでp47を隠す
-if (window.innerWidth <= 500) {
-    const p47 = document.querySelector('.p47');
-    if (p47) {
-        p47.classList.add('hide');
-        p47.style.pointerEvents = 'none'; // ← 追加
+        p47.style.pointerEvents = 'none';
     }
 }
+
+// 初期状態：p47を隠してpointer-eventsをnoneに
+const p47init = document.querySelector('.p47');
+if (p47init) {
+    p47init.classList.add('hide');
+    p47init.style.pointerEvents = 'none';
+}
+
 
 
 // ---------------------------------------------------------------
@@ -383,12 +381,10 @@ if (window.innerWidth <= 500) {
 
 document.addEventListener('wheel', e => {
 
-    // モバイルでは何もしない
     if (window.innerWidth <= 500) return;
 
     const visible = media.filter(el => !el.classList.contains('hide'));
 
-    // 画像がすべて消えているとき → p47のテキストをスクロール
     if (visible.length === 0) {
         const p47el = document.querySelector('.p47');
         if (p47el) {
@@ -397,7 +393,6 @@ document.addEventListener('wheel', e => {
         return;
     }
 
-    // 画像がある → 一番上の画像だけスクロール（p47は動かさない）
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
     let y = scrollY.get(top) || 0;
@@ -416,23 +411,18 @@ document.addEventListener('wheel', e => {
 let touchStartY = 0;
 
 document.addEventListener('touchstart', e => {
-    // 選択中はtouchStartYを更新しない
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
-
     touchStartY = e.touches[0].clientY;
 });
 
 document.addEventListener('touchmove', e => {
 
-    // テキスト選択中はすべてスキップ
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 
-    // モバイルでは画像を動かさない（p47のスクロールはCSSのtouch-actionに任せる）
     if (window.innerWidth <= 500) return;
 
-    // デスクトップのみ以下を実行
     const visible = media.filter(el => !el.classList.contains('hide'));
     if (!visible.length) return;
     if (visible.length > 1) return;
@@ -465,12 +455,9 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('click', (e) => {
 
-    
-    // テキスト選択中はスキップ
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 
-    // ドラッグ判定
     const dx = Math.abs(e.clientX - mouseDownX);
     const dy = Math.abs(e.clientY - mouseDownY);
     if (dx > 5 || dy > 5) return;
@@ -478,8 +465,7 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
     if (e.target.closest('#modal')) return;
- if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
-
+    if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
 
     const visible = media.filter(el => !el.classList.contains('hide'));
 
@@ -507,7 +493,6 @@ document.addEventListener('click', (e) => {
         }
     }
 
-    // モバイルのみp47表示制御
     updateP47Visibility();
 
 });
