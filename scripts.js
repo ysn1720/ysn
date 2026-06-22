@@ -351,8 +351,9 @@ media.forEach(el => {
     if (el.tagName === 'VIDEO') el.play();
 });
 
-// p47表示状態を更新する関数
+// p47表示状態を更新する関数（モバイルのみ）
 function updateP47Visibility() {
+    if (window.innerWidth > 500) return;
     const p47 = document.querySelector('.p47');
     if (!p47) return;
     const allHidden = media.every(el => el.classList.contains('hide'));
@@ -365,13 +366,14 @@ function updateP47Visibility() {
     }
 }
 
-// 初期状態：p47を隠してpointer-eventsをnoneに
-const p47init = document.querySelector('.p47');
-if (p47init) {
-    p47init.classList.add('hide');
-    p47init.style.pointerEvents = 'none';
+// モバイルのみp47を初期非表示
+if (window.innerWidth <= 500) {
+    const p47init = document.querySelector('.p47');
+    if (p47init) {
+        p47init.classList.add('hide');
+        p47init.style.pointerEvents = 'none';
+    }
 }
-
 
 
 // ---------------------------------------------------------------
@@ -382,15 +384,18 @@ document.addEventListener('wheel', e => {
 
     if (window.innerWidth <= 500) return;
 
+    const p47el = document.querySelector('.p47');
     const visible = media.filter(el => !el.classList.contains('hide'));
 
     if (visible.length === 0) {
-        const p47el = document.querySelector('.p47');
         if (p47el) {
             p47el.scrollTop += e.deltaY;
+            p47el.style.pointerEvents = 'auto';
         }
         return;
     }
+
+    if (p47el) p47el.style.pointerEvents = 'none';
 
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
@@ -497,7 +502,6 @@ document.addEventListener('click', (e) => {
 });
 
 
-
 // ---------------------------------------------------------------
 // init
 // ---------------------------------------------------------------
@@ -506,8 +510,10 @@ media.forEach(el => {
     const t = window.getComputedStyle(el).transform;
     baseTransform.set(el, t === 'none' ? 'translate(0px,0px)' : t);
     scrollY.set(el, 0);
-    if (window.innerWidth > 500 && el.classList.contains('mobile-only')) {
-        el.classList.add('hide');
+    if (el.classList.contains('mobile-only')) {
+        if (window.innerWidth > 500) {
+            el.classList.add('hide');
+        }
     }
     if (el.tagName === 'VIDEO') el.play();
 });
