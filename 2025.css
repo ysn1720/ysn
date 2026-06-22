@@ -28,6 +28,7 @@
   overflow-y: auto;
 }
 
+
 .p47{
   opacity: 1 !important;
   position: fixed;
@@ -42,10 +43,9 @@
   padding-bottom: 600px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  pointer-events: auto;
   user-select: text;
   -webkit-user-select: text;
-    pointer-events: none; /* ← 追加 */
+  /* pointer-eventsはJavaScriptで制御するので書かない */
 }
 
 .p47::-webkit-scrollbar {
