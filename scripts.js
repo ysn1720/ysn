@@ -507,8 +507,11 @@ media.forEach(el => {
     const t = window.getComputedStyle(el).transform;
     baseTransform.set(el, t === 'none' ? 'translate(0px,0px)' : t);
     scrollY.set(el, 0);
-    if (window.innerWidth > 500 && el.classList.contains('mobile-only')) {
-        el.classList.add('hide');
+    if (el.classList.contains('mobile-only')) {
+        if (window.innerWidth > 500) {
+            el.classList.add('hide'); // デスクトップでは隠す
+        }
+        // スマホでは隠さない（何もしない）
     }
     if (el.tagName === 'VIDEO') el.play();
 });
