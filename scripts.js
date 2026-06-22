@@ -395,10 +395,14 @@ document.addEventListener('wheel', e => {
         const p47el = document.querySelector('.p47');
         if (p47el) {
             p47el.scrollTop += e.deltaY;
+                  p47el.style.pointerEvents = 'auto'; // ← 追加
         }
         return;
     }
 
+      // 画像がある間はp47のpointer-eventsをnoneに
+    if (p47el) p47el.style.pointerEvents = 'none'; // ← 追加
+    
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
     let y = scrollY.get(top) || 0;
