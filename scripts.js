@@ -351,7 +351,7 @@ media.forEach(el => {
     if (el.tagName === 'VIDEO') el.play();
 });
 
-// p47表示状態を更新する関数
+// p47表示状態を更新する関数（モバイルのみ）
 function updateP47Visibility() {
     if (window.innerWidth > 500) return;
     const p47 = document.querySelector('.p47');
@@ -366,14 +366,13 @@ function updateP47Visibility() {
     }
 }
 
-// 初期状態
-const p47init = document.querySelector('.p47');
-if (p47init) {
-    if (window.innerWidth <= 500) {
+// モバイルのみp47を初期非表示
+if (window.innerWidth <= 500) {
+    const p47init = document.querySelector('.p47');
+    if (p47init) {
         p47init.classList.add('hide');
         p47init.style.pointerEvents = 'none';
     }
-    // デスクトップは何もしない→最初から表示
 }
 
 
@@ -424,97 +423,4 @@ document.addEventListener('touchstart', e => {
 document.addEventListener('touchmove', e => {
 
     const selection = window.getSelection();
-    if (selection && selection.toString().length > 0) return;
-
-    if (window.innerWidth <= 500) return;
-
-    const visible = media.filter(el => !el.classList.contains('hide'));
-    if (!visible.length) return;
-    if (visible.length > 1) return;
-
-    const top = visible[visible.length - 1];
-    const deltaY = touchStartY - e.touches[0].clientY;
-    touchStartY = e.touches[0].clientY;
-    const base = baseTransform.get(top);
-    let y = scrollY.get(top) || 0;
-    y -= deltaY;
-    top.style.transform = `${base} translateY(${y}px)`;
-    scrollY.set(top, y);
-    updateRotation(stack);
-    e.preventDefault();
-
-}, { passive: false });
-
-
-// ---------------------------------------------------------------
-// stack click
-// ---------------------------------------------------------------
-
-let mouseDownX = 0;
-let mouseDownY = 0;
-
-document.addEventListener('mousedown', (e) => {
-    mouseDownX = e.clientX;
-    mouseDownY = e.clientY;
-});
-
-document.addEventListener('click', (e) => {
-
-    const selection = window.getSelection();
-    if (selection && selection.toString().length > 0) return;
-
-    const dx = Math.abs(e.clientX - mouseDownX);
-    const dy = Math.abs(e.clientY - mouseDownY);
-    if (dx > 5 || dy > 5) return;
-
-    if (e.target.closest('#icon-mode')) return;
-    if (e.target.closest('.logoA, .logoB, .logoC')) return;
-    if (e.target.closest('#modal')) return;
-    if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
-
-    const visible = media.filter(el => !el.classList.contains('hide'));
-
-    if (!restoring) {
-        if (visible.length === 0) {
-            restoring = true;
-        } else {
-            const top = visible[visible.length - 1];
-            if (top.tagName === 'VIDEO') { top.pause(); top.currentTime = 0; }
-            top.classList.add('hide');
-        }
-    }
-
-    if (restoring) {
-        const hidden = media.filter(el => el.classList.contains('hide'));
-        if (hidden.length) {
-            const el = hidden[0];
-            el.classList.remove('hide');
-            el.style.transform = '';
-            scrollY.set(el, 0);
-            if (el.tagName === 'VIDEO') el.play();
-        }
-        if (!media.some(el => el.classList.contains('hide'))) {
-            restoring = false;
-        }
-    }
-
-    updateP47Visibility();
-
-});
-
-
-// ---------------------------------------------------------------
-// init
-// ---------------------------------------------------------------
-
-media.forEach(el => {
-    const t = window.getComputedStyle(el).transform;
-    baseTransform.set(el, t === 'none' ? 'translate(0px,0px)' : t);
-    scrollY.set(el, 0);
-    if (el.classList.contains('mobile-only')) {
-        if (window.innerWidth > 500) {
-            el.classList.add('hide');
-        }
-    }
-    if (el.tagName === 'VIDEO') el.play();
-});
+    if
