@@ -361,16 +361,20 @@ function updateP47Visibility() {
     const allHidden = media.every(el => el.classList.contains('hide'));
     if (allHidden) {
         p47.classList.remove('hide');
+                p47.style.pointerEvents = 'auto'; // ← 追加
     } else {
         p47.classList.add('hide');
-    }
-}
+                p47.style.pointerEvents = 'none'; // ← 追加
 
+    }
 // モバイルの初期状態：画像があるのでp47を隠す
 if (window.innerWidth <= 500) {
-    document.querySelector('.p47')?.classList.add('hide');
+    const p47 = document.querySelector('.p47');
+    if (p47) {
+        p47.classList.add('hide');
+        p47.style.pointerEvents = 'none'; // ← 追加
+    }
 }
-
 
 
 // ---------------------------------------------------------------
