@@ -375,6 +375,12 @@ if (window.innerWidth <= 500) {
     }
 }
 
+// デスクトップはp47のpointer-eventsを最初はnoneに
+if (window.innerWidth > 500) {
+    const p47init = document.querySelector('.p47');
+    if (p47init) p47init.style.pointerEvents = 'none';
+}
+
 
 // ---------------------------------------------------------------
 // wheel scroll
@@ -487,12 +493,25 @@ document.addEventListener('click', (e) => {
         const hidden = media.filter(el => el.classList.contains('hide'));
         if (hidden.length) {
             const el = hidden[0];
-            el.classList.remove('hide');
-            el.style.transform = '';
-            scrollY.set(el, 0);
-            if (el.tagName === 'VIDEO') el.play();
+            // デスクトップではmobile-onlyをスキップ
+            if (window.innerWidth > 500 && el.classList.contains('mobile-only')) {
+                // p0はスキップして次へ
+                const nextHidden = media.filter(m => m.classList.contains('hide') && !m.classList.contains('mobile-only'));
+                if (nextHidden.length) {
+                    const next = nextHidden[0];
+                    next.classList.remove('hide');
+                    next.style.transform = '';
+                    scrollY.set(next, 0);
+                    if (next.tagName === 'VIDEO') next.play();
+                }
+            } else {
+                el.classList.remove('hide');
+                el.style.transform = '';
+                scrollY.set(el, 0);
+                if (el.tagName === 'VIDEO') el.play();
+            }
         }
-        if (!media.some(el => el.classList.contains('hide'))) {
+        if (!media.some(el => el.classList.contains('hide') && !el.classList.contains('mobile-only'))) {
             restoring = false;
         }
     }
@@ -513,7 +532,9 @@ media.forEach(el => {
     if (el.classList.contains('mobile-only')) {
         if (window.innerWidth > 500) {
             el.classList.add('hide');
+            el.style.display = 'none'; // デスクトップでは完全非表示
         }
     }
     if (el.tagName === 'VIDEO') el.play();
 });
+
