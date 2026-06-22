@@ -389,20 +389,20 @@ document.addEventListener('wheel', e => {
 
     if (window.innerWidth <= 500) return;
 
+    const p47el = document.querySelector('.p47'); // ← 先頭で定義
     const visible = media.filter(el => !el.classList.contains('hide'));
 
     if (visible.length === 0) {
-        const p47el = document.querySelector('.p47');
         if (p47el) {
             p47el.scrollTop += e.deltaY;
-                  p47el.style.pointerEvents = 'auto'; // ← 追加
+            p47el.style.pointerEvents = 'auto';
         }
         return;
     }
 
-      // 画像がある間はp47のpointer-eventsをnoneに
-    if (p47el) p47el.style.pointerEvents = 'none'; // ← 追加
-    
+    // 画像がある間はp47のpointer-eventsをnoneに
+    if (p47el) p47el.style.pointerEvents = 'none';
+
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
     let y = scrollY.get(top) || 0;
@@ -412,7 +412,6 @@ document.addEventListener('wheel', e => {
     updateRotation(stack);
 
 }, { passive: false });
-
 
 // ---------------------------------------------------------------
 // touch scroll
