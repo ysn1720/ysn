@@ -465,6 +465,15 @@ document.addEventListener('mousedown', (e) => {
 
 document.addEventListener('click', (e) => {
 
+    // デスクトップで画像がある間はp47のpointer-eventsを必ずnoneに
+    if (window.innerWidth > 500) {
+        const p47el = document.querySelector('.p47');
+        const visible = media.filter(el => !el.classList.contains('hide'));
+        if (p47el && visible.length > 0) {
+            p47el.style.pointerEvents = 'none';
+        }
+    }
+
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
 
