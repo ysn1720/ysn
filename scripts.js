@@ -354,6 +354,7 @@ media.forEach(el => {
 
 // p47表示状態を更新する関数
 function updateP47Visibility() {
+    if (window.innerWidth > 500) return; // ← デスクトップでは何もしない
     const p47 = document.querySelector('.p47');
     if (!p47) return;
     const allHidden = media.every(el => el.classList.contains('hide'));
