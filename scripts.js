@@ -472,26 +472,14 @@ document.addEventListener('click', (e) => {
     const dy = Math.abs(e.clientY - mouseDownY);
     if (dx > 5 || dy > 5) return;
 
+    // 除外するエリア
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
     if (e.target.closest('#modal')) return;
+    if (e.target.closest('.footer')) return;
+    if (e.target.closest('.header')) return;
 
-    // stackの範囲内かp47の範囲内かを座標で判定
-    const stackEl = document.getElementById('stack');
-    const p47el = document.querySelector('.p47');
-    const stackRect = stackEl ? stackEl.getBoundingClientRect() : null;
-    const p47Rect = p47el ? p47el.getBoundingClientRect() : null;
-
-    const inStack = stackRect && 
-        e.clientX >= stackRect.left && e.clientX <= stackRect.right &&
-        e.clientY >= stackRect.top && e.clientY <= stackRect.bottom;
-
-    const inP47 = p47Rect &&
-        e.clientX >= p47Rect.left && e.clientX <= p47Rect.right &&
-        e.clientY >= p47Rect.top && e.clientY <= p47Rect.bottom;
-
-    if (!inStack && !inP47) return;
-
+    // それ以外はすべてクリックを受け取る
     const visible = media.filter(el => !el.classList.contains('hide'));
 
     if (!restoring) {
