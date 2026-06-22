@@ -389,7 +389,7 @@ font-size: 13.5px;
    /* --- footer --- */
 
 footer {
-   position: fixed;
+  
   display: flex;
 }
 
