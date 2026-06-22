@@ -45,6 +45,7 @@
   pointer-events: auto;
   user-select: text;
   -webkit-user-select: text;
+    pointer-events: none; /* ← 追加 */
 }
 
 .p47::-webkit-scrollbar {
