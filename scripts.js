@@ -369,10 +369,15 @@ function updateP47Visibility() {
 // 初期状態：p47を隠してpointer-eventsをnoneに
 const p47init = document.querySelector('.p47');
 if (p47init) {
-    p47init.classList.add('hide');
-    p47init.style.pointerEvents = 'none';
+    if (window.innerWidth <= 500) {
+        // モバイルのみ隠す
+        p47init.classList.add('hide');
+        p47init.style.pointerEvents = 'none';
+    } else {
+        // デスクトップは最初から表示
+        p47init.style.pointerEvents = 'none'; // 画像がある間はクリックを奪わない
+    }
 }
-
 
 
 // ---------------------------------------------------------------
