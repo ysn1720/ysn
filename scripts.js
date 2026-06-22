@@ -333,7 +333,6 @@ window.addEventListener('load', function () {
     });
 });
 
-
 // ---------------------------------------------------------------
 // 2025 stack
 // ---------------------------------------------------------------
@@ -354,7 +353,7 @@ media.forEach(el => {
 
 // p47表示状態を更新する関数
 function updateP47Visibility() {
-    if (window.innerWidth > 500) return; // ← デスクトップでは何もしない
+    if (window.innerWidth > 500) return;
     const p47 = document.querySelector('.p47');
     if (!p47) return;
     const allHidden = media.every(el => el.classList.contains('hide'));
@@ -367,17 +366,14 @@ function updateP47Visibility() {
     }
 }
 
-// 初期状態：p47を隠してpointer-eventsをnoneに
+// 初期状態
 const p47init = document.querySelector('.p47');
 if (p47init) {
     if (window.innerWidth <= 500) {
-        // モバイルのみ隠す
         p47init.classList.add('hide');
         p47init.style.pointerEvents = 'none';
-    } else {
-        // デスクトップは最初から表示
-        p47init.style.pointerEvents = 'none'; // 画像がある間はクリックを奪わない
     }
+    // デスクトップは何もしない→最初から表示
 }
 
 
@@ -389,7 +385,7 @@ document.addEventListener('wheel', e => {
 
     if (window.innerWidth <= 500) return;
 
-    const p47el = document.querySelector('.p47'); // ← 先頭で定義
+    const p47el = document.querySelector('.p47');
     const visible = media.filter(el => !el.classList.contains('hide'));
 
     if (visible.length === 0) {
@@ -400,7 +396,6 @@ document.addEventListener('wheel', e => {
         return;
     }
 
-    // 画像がある間はp47のpointer-eventsをnoneに
     if (p47el) p47el.style.pointerEvents = 'none';
 
     const top = visible[visible.length - 1];
@@ -412,6 +407,7 @@ document.addEventListener('wheel', e => {
     updateRotation(stack);
 
 }, { passive: false });
+
 
 // ---------------------------------------------------------------
 // touch scroll
@@ -507,7 +503,6 @@ document.addEventListener('click', (e) => {
 });
 
 
-
 // ---------------------------------------------------------------
 // init
 // ---------------------------------------------------------------
@@ -518,9 +513,8 @@ media.forEach(el => {
     scrollY.set(el, 0);
     if (el.classList.contains('mobile-only')) {
         if (window.innerWidth > 500) {
-            el.classList.add('hide'); // デスクトップでは隠す
+            el.classList.add('hide');
         }
-        // スマホでは隠さない（何もしない）
     }
     if (el.tagName === 'VIDEO') el.play();
 });
