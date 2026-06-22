@@ -334,7 +334,6 @@ window.addEventListener('load', function () {
 });
 
 // ---------------------------------------------------------------
-// ---------------------------------------------------------------
 // 2025 stack
 // ---------------------------------------------------------------
 
@@ -352,7 +351,7 @@ media.forEach(el => {
     if (el.tagName === 'VIDEO') el.play();
 });
 
-// p47表示状態を更新する関数
+// p47表示状態を更新する関数（デスクトップ・モバイル両方）
 function updateP47Visibility() {
     const p47 = document.querySelector('.p47');
     if (!p47) return;
@@ -361,19 +360,15 @@ function updateP47Visibility() {
         p47.classList.remove('hide');
         p47.style.pointerEvents = 'auto';
     } else {
-        if (window.innerWidth <= 500) {
-            p47.classList.add('hide');
-        }
+        p47.classList.add('hide');
         p47.style.pointerEvents = 'none';
     }
 }
 
-// 初期状態
+// 初期状態：両方hideに
 const p47init = document.querySelector('.p47');
 if (p47init) {
-    if (window.innerWidth <= 500) {
-        p47init.classList.add('hide');
-    }
+    p47init.classList.add('hide');
     p47init.style.pointerEvents = 'none';
 }
 
