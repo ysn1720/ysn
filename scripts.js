@@ -475,7 +475,22 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
     if (e.target.closest('#modal')) return;
-    if (!e.target.closest('#stack') && !e.target.closest('.p47')) return;
+
+    // stackの範囲内かp47の範囲内かを座標で判定
+    const stackEl = document.getElementById('stack');
+    const p47el = document.querySelector('.p47');
+    const stackRect = stackEl ? stackEl.getBoundingClientRect() : null;
+    const p47Rect = p47el ? p47el.getBoundingClientRect() : null;
+
+    const inStack = stackRect && 
+        e.clientX >= stackRect.left && e.clientX <= stackRect.right &&
+        e.clientY >= stackRect.top && e.clientY <= stackRect.bottom;
+
+    const inP47 = p47Rect &&
+        e.clientX >= p47Rect.left && e.clientX <= p47Rect.right &&
+        e.clientY >= p47Rect.top && e.clientY <= p47Rect.bottom;
+
+    if (!inStack && !inP47) return;
 
     const visible = media.filter(el => !el.classList.contains('hide'));
 
@@ -492,10 +507,7 @@ document.addEventListener('click', (e) => {
     if (restoring) {
         const hidden = media.filter(el => el.classList.contains('hide'));
         if (hidden.length) {
-            const el = hidden[0];
-            // デスクトップではmobile-onlyをスキップ
-            if (window.innerWidth > 500 && el.classList.contains('mobile-only')) {
-                // p0はスキップして次へ
+            if (window.innerWidth > 500 && hidden[0].classList.contains('mobile-only')) {
                 const nextHidden = media.filter(m => m.classList.contains('hide') && !m.classList.contains('mobile-only'));
                 if (nextHidden.length) {
                     const next = nextHidden[0];
@@ -505,6 +517,7 @@ document.addEventListener('click', (e) => {
                     if (next.tagName === 'VIDEO') next.play();
                 }
             } else {
+                const el = hidden[0];
                 el.classList.remove('hide');
                 el.style.transform = '';
                 scrollY.set(el, 0);
