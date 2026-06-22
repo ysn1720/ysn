@@ -38,7 +38,7 @@
   height: calc(100vh - 66px - 68px);
   overflow-y: scroll !important;
   text-align: center;
-  z-index: 999;
+  z-index: 0;
   padding-bottom: 600px;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -209,7 +209,7 @@
     left: 0 !important;
     top: 73px !important;
     transform: none !important;
-    width: 100% !important;
+    width: 90% !important;
     height: calc(100vh - 168px) !important;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
