@@ -424,6 +424,9 @@ document.addEventListener('wheel', e => {
     scrollY.set(top, y);
     updateRotation(stack);
 
+        e.preventDefault(); // ← 追加
+
+
 }, { passive: false });
 
 
