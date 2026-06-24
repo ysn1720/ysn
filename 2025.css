@@ -219,8 +219,8 @@
     z-index: 9999 !important;
     pointer-events: all;
     touch-action: auto;
-  user-select: none; /* ← noneに変更 */
-  -webkit-user-select: none; /* ← noneに変更 */
+    user-select: text; /* ← noneからtextに変更 */
+    -webkit-user-select: text; /* ← noneからtextに変更 */
     -webkit-touch-callout: default;
     text-align: center;
     padding-bottom: 200px;
