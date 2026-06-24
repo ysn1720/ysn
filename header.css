@@ -39,7 +39,6 @@ color: var(--gray) !important;
 
 @media only screen and (max-width: 720px) {
   .header {
-            position: fixed;
     flex-direction: column;
        width: 100%;
     }
