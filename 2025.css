@@ -45,9 +45,7 @@
   padding-bottom: 600px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  user-select: text;
-  -webkit-user-select: text;
-  /* pointer-eventsはJavaScriptで制御するので書かない */
+  /* user-selectはJavaScriptで制御するので書かない */
 }
 
 .p47::-webkit-scrollbar {
