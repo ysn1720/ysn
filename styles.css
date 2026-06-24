@@ -427,7 +427,6 @@ body.sub .footer_container{
 
 @media only screen and (max-width: 720px) {
   .footer {
-            position: fixed;
 
     flex-direction: row;
     z-index: 999;
