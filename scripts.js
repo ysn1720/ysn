@@ -351,8 +351,24 @@ media.forEach(el => {
     if (el.tagName === 'VIDEO') el.play();
 });
 
-// p47表示状態を更新する関数（デスクトップ・モバイル両方）
+// p47のuser-selectを制御する関数
+function updateP47UserSelect() {
+    if (window.innerWidth <= 500) return;
+    const p47 = document.querySelector('.p47');
+    if (!p47) return;
+    const visible = media.filter(el => !el.classList.contains('hide'));
+    if (visible.length === 0) {
+        p47.style.userSelect = 'text';
+        p47.style.webkitUserSelect = 'text';
+    } else {
+        p47.style.userSelect = 'none';
+        p47.style.webkitUserSelect = 'none';
+    }
+}
+
+// p47表示状態を更新する関数（モバイルのみ）
 function updateP47Visibility() {
+    if (window.innerWidth > 500) return;
     const p47 = document.querySelector('.p47');
     if (!p47) return;
     const allHidden = media.every(el => el.classList.contains('hide'));
@@ -365,11 +381,17 @@ function updateP47Visibility() {
     }
 }
 
-// 初期状態：両方hideに
+// 初期状態
 const p47init = document.querySelector('.p47');
 if (p47init) {
-    p47init.classList.add('hide');
-    p47init.style.pointerEvents = 'none';
+    if (window.innerWidth <= 500) {
+        p47init.classList.add('hide');
+        p47init.style.pointerEvents = 'none';
+    } else {
+        // デスクトップは最初user-selectをnoneに
+        p47init.style.userSelect = 'none';
+        p47init.style.webkitUserSelect = 'none';
+    }
 }
 
 
@@ -388,8 +410,11 @@ document.addEventListener('wheel', e => {
         if (p47el) {
             p47el.scrollTop += e.deltaY;
         }
+        updateP47UserSelect();
         return;
     }
+
+    updateP47UserSelect();
 
     const top = visible[visible.length - 1];
     const base = baseTransform.get(top);
@@ -458,7 +483,7 @@ document.addEventListener('click', (e) => {
 
     const dx = Math.abs(e.clientX - mouseDownX);
     const dy = Math.abs(e.clientY - mouseDownY);
-    if (dx > 5 || dy > 5) return;
+    if (dx > 10 || dy > 10) return;
 
     if (e.target.closest('#icon-mode')) return;
     if (e.target.closest('.logoA, .logoB, .logoC')) return;
@@ -479,31 +504,31 @@ document.addEventListener('click', (e) => {
     }
 
     if (restoring) {
-        const hidden = media.filter(el => el.classList.contains('hide'));
+        const hidden = media.filter(el => {
+            if (!el.classList.contains('hide')) return false;
+            if (window.innerWidth > 500 && el.classList.contains('mobile-only')) return false;
+            return true;
+        });
+
         if (hidden.length) {
-            if (window.innerWidth > 500 && hidden[0].classList.contains('mobile-only')) {
-                const nextHidden = media.filter(m => m.classList.contains('hide') && !m.classList.contains('mobile-only'));
-                if (nextHidden.length) {
-                    const next = nextHidden[0];
-                    next.classList.remove('hide');
-                    next.style.transform = '';
-                    scrollY.set(next, 0);
-                    if (next.tagName === 'VIDEO') next.play();
-                }
-            } else {
-                const el = hidden[0];
-                el.classList.remove('hide');
-                el.style.transform = '';
-                scrollY.set(el, 0);
-                if (el.tagName === 'VIDEO') el.play();
-            }
+            const el = hidden[0];
+            el.classList.remove('hide');
+            el.style.transform = '';
+            scrollY.set(el, 0);
+            if (el.tagName === 'VIDEO') el.play();
         }
-        if (!media.some(el => el.classList.contains('hide') && !el.classList.contains('mobile-only'))) {
+
+        if (!media.some(el => {
+            if (!el.classList.contains('hide')) return false;
+            if (window.innerWidth > 500 && el.classList.contains('mobile-only')) return false;
+            return true;
+        })) {
             restoring = false;
         }
     }
 
     updateP47Visibility();
+    updateP47UserSelect(); // ← クリックのたびにも更新
 
 });
 
@@ -520,6 +545,8 @@ media.forEach(el => {
         if (window.innerWidth > 500) {
             el.classList.add('hide');
             el.style.display = 'none';
+        } else {
+            el.style.display = '';
         }
     }
     if (el.tagName === 'VIDEO') el.play();
