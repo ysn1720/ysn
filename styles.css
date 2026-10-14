@@ -1,4 +1,3 @@
-
 *, :after, :before {
   margin:0; padding:0;
   -webkit-box-sizing: border-box;
@@ -23,7 +22,7 @@ body {
   position:relative;
   margin: 0;
   padding: 0;
-  
+  overflow: hidden; /* new*/
 }
 
 
@@ -71,7 +70,7 @@ color: var(--gray) !important;
   --softwhite: #fffdef;
   --gray: rgb(148, 148, 148);
   --yellow: #fff9bf;
-  --alertgreen: #5d8e65;
+  --popup: rgb(182, 216, 220);
 }
 
 
@@ -126,7 +125,11 @@ color: var(--gray) !important;
 
 
 /* logo yukkuri shikkari nokosu */
-
+.logoA,
+.logoB,
+.logoC {
+    transition: opacity 0.2s ease;
+}
 .logoA {
   right: 150px;
   bottom: 300px;
@@ -301,6 +304,7 @@ font-size: 13.5px;
 .contents {
   flex-grow: 1;  
   display: flex;
+  min-height:0;
 }
 
 @media (max-width:720px){
@@ -389,8 +393,8 @@ font-size: 13.5px;
    /* --- footer --- */
 
 footer {
-  
   display: flex;
+
 }
 
  .footer_container {
@@ -400,6 +404,8 @@ footer {
   gap: 5px;
   padding: 20px 0px 10px 0px;
   border-top: 1px solid;
+  
+
 }
 
 
@@ -408,6 +414,7 @@ footer {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  
 }
 
 
@@ -427,9 +434,9 @@ body.sub .footer_container{
 
 @media only screen and (max-width: 720px) {
   .footer {
-
     flex-direction: row;
     z-index: 999;
+    
   }
 
   .flex-left {
@@ -539,19 +546,19 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--alertgreen);
-  border-radius: 8px;
-  padding: 35px;
-  width: 490px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  background-color: var(--popup);
+  border-radius: 20px;
+  padding: 65px;
+  width: auto;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  */
   color: var(--white);
   margin: 0;
 }
 
 .close {
   position: absolute;
-  top: 7px;
-  right: 15px;
+  top: 5%;
+  right: 7%;
   cursor: pointer;
   font-size: 20px;
 }
@@ -565,15 +572,20 @@ background-image: url("bau/img/logo/ysn_y_4pt.svg");
   margin-bottom: 15px;
 }
 
-.popup .eng-txt,
+.popup .eng-txt
 {
   font-size: 1rem;
 }
 
 .popup a:link, a:active {
-  color: var(--white);
-  text-decoration: underline solid 1px ;
+  color: var(--gray);
+  text-decoration: none ;
+    border-bottom: dotted 1px;
+
+
 }
+
+
 
 
 
